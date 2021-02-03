@@ -1,32 +1,54 @@
 package jags.backend.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Participant")
 public class Participant {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "Civilite")
 	private Integer civilite;
-	
+
 	@Column(name = "Nom")
 	private String nom;
-	
+
 	@Column(name = "Prenom")
 	private String prenom;
-	
+
 	@Column(name = "DateNaissance")
 	private String dateNaissance;
 
+	/*@ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("Entreprise_id")
+    private Entreprise entreprise;
+
+	/*@OneToOne
+	@JoinColumn(name = "Coordonnee_id")
+	private Cordonnee Cordonnee;*/
+
+	@OneToMany(mappedBy = "Participant")
+	private List<Assister> prerequis;
+	
 	public Long getId() {
 		return id;
 	}
