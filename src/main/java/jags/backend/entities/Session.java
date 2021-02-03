@@ -30,6 +30,9 @@ public class Session {
 	@Column(name="Type")
 	private Integer type;
 	
+	@Column(name="PrixHT")
+	private Integer prixHT;
+	
 	@Column(name="Personnalisee")
 	private Integer personalisee;
 	
@@ -122,6 +125,14 @@ public class Session {
 
 	public void setPrerequis(List<Assister> prerequis) {
 		this.prerequis = prerequis;
+	}
+
+	public Integer getPrixHT() {
+		return prixHT;
+	}
+
+	public void setPrixHT(Integer prixHT) {
+		this.prixHT = prixHT;
 	}
 	
 }
