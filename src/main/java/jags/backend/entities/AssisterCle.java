@@ -1,4 +1,4 @@
-package jags.backend.entities.composite.key;
+package jags.backend.entities;
 
 import java.io.Serializable;
 

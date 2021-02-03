@@ -46,7 +46,7 @@ public class Participant {
 	@JoinColumn(name = "Coordonnee_id")
 	private Cordonnee Cordonnee;*/
 
-	@OneToMany(mappedBy = "Participant")
+	@OneToMany(mappedBy = "participant")
 	private List<Assister> prerequis;
 	
 	public Long getId() {
