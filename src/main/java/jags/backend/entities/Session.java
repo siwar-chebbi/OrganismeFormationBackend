@@ -31,7 +31,7 @@ public class Session {
 	private Integer type;
 	
 	@Column(name="PrixHT")
-	private Integer prixHT;
+	private Double prixHT;
 	
 	@Column(name="Personnalisee")
 	private Integer personalisee;
@@ -77,6 +77,14 @@ public class Session {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public Double getPrixHT() {
+		return prixHT;
+	}
+
+	public void setPrixHT(Double prixHT) {
+		this.prixHT = prixHT;
 	}
 
 	public Integer getPersonalisee() {
@@ -126,13 +134,4 @@ public class Session {
 	public void setPrerequis(List<Assister> prerequis) {
 		this.prerequis = prerequis;
 	}
-
-	public Integer getPrixHT() {
-		return prixHT;
-	}
-
-	public void setPrixHT(Integer prixHT) {
-		this.prixHT = prixHT;
-	}
-	
 }
