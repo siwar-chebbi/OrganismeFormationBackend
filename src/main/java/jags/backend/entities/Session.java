@@ -30,6 +30,9 @@ public class Session {
 	@Column(name="Type")
 	private Integer type;
 	
+	@Column(name="PrixHT")
+	private Double prixHT;
+	
 	@Column(name="Personnalisee")
 	private Integer personalisee;
 	
@@ -74,6 +77,14 @@ public class Session {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public Double getPrixHT() {
+		return prixHT;
+	}
+
+	public void setPrixHT(Double prixHT) {
+		this.prixHT = prixHT;
 	}
 
 	public Integer getPersonalisee() {
