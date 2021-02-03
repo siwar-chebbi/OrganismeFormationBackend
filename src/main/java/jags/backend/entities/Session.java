@@ -30,8 +30,8 @@ public class Session {
 	@Column(name="Type")
 	private Integer type;
 	
-	@Column(name="Prix")
-	private Integer prix;
+	@Column(name="PrixHT")
+	private Integer prixHT;
 	
 	@Column(name="Personnalisee")
 	private Integer personalisee;
@@ -127,12 +127,12 @@ public class Session {
 		this.prerequis = prerequis;
 	}
 
-	public Integer getPrix() {
-		return prix;
+	public Integer getPrixHT() {
+		return prixHT;
 	}
 
-	public void setPrix(Integer prix) {
-		this.prix = prix;
+	public void setPrixHT(Integer prixHT) {
+		this.prixHT = prixHT;
 	}
 	
 }
