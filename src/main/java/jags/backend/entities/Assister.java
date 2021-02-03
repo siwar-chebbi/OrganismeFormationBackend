@@ -5,6 +5,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
+import jags.backend.entities.composite.key.AssisterCle;
+
 @Entity
 public class Assister {
 	
