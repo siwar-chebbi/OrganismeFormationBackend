@@ -18,10 +18,10 @@ public class Lieu {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="Nom")
+	@Column(name="Nom", length=45)
 	private String nom;
 	
-	@Column(name="Salle")
+	@Column(name="Salle", length=45)
 	private String salle;
 
 	@OneToMany(mappedBy = "lieu")

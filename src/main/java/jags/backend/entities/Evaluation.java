@@ -15,7 +15,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="Evaluation")
@@ -26,7 +25,7 @@ public class Evaluation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="NumeroSession")
+	@Column(name="NumeroSession", length = 50)
 	private String numeroSession;
 
 	@Column(name="Accueil")
@@ -56,9 +55,8 @@ public class Evaluation {
 	@Column(name="SouhaitFormation")
 	private Boolean souhaitFormation;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DateEvaluation")
-	@DateTimeFormat(pattern = "dd-MM-yyyy:hh:mm:ss")
 	private Date dateEvaluation;
 	
 	@Column(name="Recommandation")

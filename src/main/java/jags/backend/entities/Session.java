@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -28,7 +27,7 @@ public class Session {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="Numero")
+	@Column(name="Numero", length = 50)
 	private String numero;
 	
 	@Column(name="Type")
@@ -46,14 +45,12 @@ public class Session {
 	@Column(name="Validation")
 	private Integer validation;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DateDebut")
-	@DateTimeFormat(pattern = "dd-MM-yyyy:hh:mm:ss")
 	private Date dateDebut;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DateFin")
-	@DateTimeFormat(pattern = "dd-MM-yyyy:hh:mm:ss")
 	private Date dateFin;
 
 //	@ManyToOne(fetch = FetchType.LAZY)

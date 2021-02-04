@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import jags.backend.entities.composite.key.AssisterCle;
 
 @Entity
-@Table(name="Evaluation")
+@Table(name="Assister")
 public class Assister {
 	
 	@EmbeddedId
