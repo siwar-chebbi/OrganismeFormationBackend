@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,10 +16,10 @@ public class Entreprise {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "Nom")
+	@Column(name = "Nom", length = 60)
 	private String nom;
 
-	@Column(name = "Siret")
+	@Column(name = "Siret",  length = 20)
 	private String siret;
 
 	@OneToOne(mappedBy = "entreprise")
@@ -51,6 +50,22 @@ public class Entreprise {
 
 	public void setSiret(String siret) {
 		this.siret = siret;
+	}
+
+	public Cordonnee getCoordonnee() {
+		return coordonnee;
+	}
+
+	public void setCoordonnee(Cordonnee coordonnee) {
+		this.coordonnee = coordonnee;
+	}
+
+	public Participant getParticipant() {
+		return participant;
+	}
+
+	public void setParticipant(Participant participant) {
+		this.participant = participant;
 	}
 	
 	

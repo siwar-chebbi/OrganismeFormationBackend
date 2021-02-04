@@ -17,32 +17,32 @@ public class Cordonnee {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "NumeroVoie")
+	@Column(name = "NumeroVoie", length = 10)
 	private String numeroVoie;
 	
-	@Column(name = "TypeVoie")
+	@Column(name = "TypeVoie", length = 40)
 	private String typeVoie;
 	
-	@Column(name = "Ville")
+	@Column(name = "Ville", length = 100)
 	private String ville;
 	
-	@Column(name = "CodePostal") 
+	@Column(name = "CodePostal", length = 20) 
 	private String codePostal;
 	
-	@Column(name = "Pays")
+	@Column(name = "Pays", length = 100)
 	private String pays;
 	
-	@Column(name = "Mail")
+	@Column(name = "Mail", length = 60)
 	private String mail;
 	
-	@Column(name = "Telephone")
+	@Column(name = "Telephone", length = 20)
 	private String telephone;
 
 	@OneToOne
 	@JoinColumn(name = "Entreprise_id")
 	private Entreprise entreprise;
 	
-	@OneToOne(mappedBy = "cordonnee")
+	@OneToOne(mappedBy = "coordonnee")
 	private Participant participant;
 	
 	public Long getId() {
@@ -107,6 +107,22 @@ public class Cordonnee {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public Entreprise getEntreprise() {
+		return entreprise;
+	}
+
+	public void setEntreprise(Entreprise entreprise) {
+		this.entreprise = entreprise;
+	}
+
+	public Participant getParticipant() {
+		return participant;
+	}
+
+	public void setParticipant(Participant participant) {
+		this.participant = participant;
 	}
 	
 }

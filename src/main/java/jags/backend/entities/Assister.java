@@ -4,10 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.Table;
 
 import jags.backend.entities.composite.key.AssisterCle;
 
 @Entity
+@Table(name="Assister")
 public class Assister {
 	
 	@EmbeddedId
