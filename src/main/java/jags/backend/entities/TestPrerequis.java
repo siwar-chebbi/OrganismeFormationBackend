@@ -17,10 +17,10 @@ public class TestPrerequis {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name ="Numero")
-	private Integer numero;
+	@Column(name ="Numero", length=50)
+	private String numero;
 	
-	@Column(name ="Lien")
+	@Column(name ="Lien", length=300)
 	private String lien;
 	
 	
@@ -32,31 +32,24 @@ public class TestPrerequis {
 	public Long getId() {
 		return id;
 	}
-
-	public Integer getNumero() {
-		return numero;
-	}
-
-	public String getLien() {
-		return lien;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public void setNumero(Integer numero) {
+	public String getNumero() {
+		return numero;
+	}
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
-
+	public String getLien() {
+		return lien;
+	}
 	public void setLien(String lien) {
 		this.lien = lien;
 	}
-
 	public Formation getFormation() {
 		return formation;
 	}
-
 	public void setFormation(Formation formation) {
 		this.formation = formation;
 	}

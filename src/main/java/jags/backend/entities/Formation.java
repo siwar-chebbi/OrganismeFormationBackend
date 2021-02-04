@@ -3,9 +3,9 @@ package jags.backend.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,11 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import lombok.Getter;
 
 @Entity 
 @Table(name="Formation")
@@ -30,22 +30,23 @@ public class Formation {
 	@Column(name ="Numero")
 	private Integer numero;
 	
-	@Column(name ="Titre")
+	@Column(name ="Titre", length=100)
 	private String titre;
 	
 	@Column(name ="Contenu")
 	private String contenu;
 	
-	@Column(name ="Logiciel")
+	@Column(name ="Logiciel", length=45)
 	private String logiciel;
 	
-	@Column(name ="Support")
+	@Column(name ="Support", length=45)
 	private String support;
 	
 	@OneToOne(mappedBy = "formation")// donc la table Formation qui gere
     private TestPrerequis testPrerequis;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("id")
 	@JoinColumn(name = "Responsable_id")
 	private Responsable responsable;
 	
@@ -57,6 +58,9 @@ public class Formation {
 	joinColumns = @JoinColumn(name = "Formation_id"), 
 	inverseJoinColumns = @JoinColumn (name ="Theme_id"))
 	private List<Theme> themes = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "formation")
+	private List<Session> sessions;
 
 	public Long getId() {
 		return id;
@@ -121,5 +125,30 @@ public class Formation {
 	public void setResponsable(Responsable responsable) {
 		this.responsable = responsable;
 	}
+
+	public List<Enseigner> getExperience() {
+		return experience;
+	}
+
+	public void setExperience(List<Enseigner> experience) {
+		this.experience = experience;
+	}
+
+	public List<Theme> getThemes() {
+		return themes;
+	}
+
+	public void setThemes(List<Theme> themes) {
+		this.themes = themes;
+	}
+
+	public List<Session> getSessions() {
+		return sessions;
+	}
+
+	public void setSessions(List<Session> sessions) {
+		this.sessions = sessions;
+	}
+	
 
 }

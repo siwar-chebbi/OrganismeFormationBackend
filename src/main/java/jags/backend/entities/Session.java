@@ -53,10 +53,10 @@ public class Session {
 	@Column(name="DateFin")
 	private Date dateFin;
 
-//	@ManyToOne(fetch = FetchType.LAZY)
-//    @MapsId("id")
-//	@JoinColumn(name="Formation_id")
-//    private Formation formation;
+	@ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("id")
+	@JoinColumn(name="Formation_id")
+    private Formation formation;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @MapsId("id")
@@ -146,13 +146,13 @@ public class Session {
 		this.prerequis = prerequis;
 	}
 
-//	public Formation getFormation() {
-//		return formation;
-//	}
-//
-//	public void setFormation(Formation formation) {
-//		this.formation = formation;
-//	}
+	public Formation getFormation() {
+		return formation;
+	}
+
+	public void setFormation(Formation formation) {
+		this.formation = formation;
+	}
 
 	public Lieu getLieu() {
 		return lieu;

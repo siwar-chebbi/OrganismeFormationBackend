@@ -27,7 +27,7 @@ public class Theme {
 	@Column(name = "Numero")
 	private Integer Numero;
 	
-	@Column(name = "Nom")
+	@Column(name = "Nom", length=50)
 	private String Nom;
 	
 	@ManyToOne

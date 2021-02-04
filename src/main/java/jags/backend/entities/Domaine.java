@@ -15,7 +15,7 @@ public class Domaine {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "Nom")
+	@Column(name = "Nom", length=45)
 	private String Nom;
 	
 	@Column(name = "Description")

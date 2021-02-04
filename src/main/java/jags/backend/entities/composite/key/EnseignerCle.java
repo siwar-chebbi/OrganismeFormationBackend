@@ -8,9 +8,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class EnseignerCle implements Serializable {
 	
-
 	private static final long serialVersionUID = 1L;
-
 
 	@Column(name="Formation_id")
 	private Long formationId;

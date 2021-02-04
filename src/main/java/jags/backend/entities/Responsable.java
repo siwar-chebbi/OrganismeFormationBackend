@@ -18,22 +18,22 @@ public class Responsable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name ="Nom")
+	@Column(name ="Nom", length=45)
 	private String nom;
 	
-	@Column(name ="Prenom")
+	@Column(name ="Prenom", length=45)
 	private String prenom;
 	
-	@Column(name ="Role")
+	@Column(name ="Role", length=80)
 	private String role;
 	
-	@Column(name ="Mail")
+	@Column(name ="Mail", length=80)
 	private String mail;
 	
-	@Column(name ="Telephone")
+	@Column(name ="Telephone", length=25)
 	private String telephone;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "responsable")
 	private List<Formation> formations = new ArrayList<>();
 
 	public Long getId() {
