@@ -41,6 +41,7 @@ public class Theme {
 	@OneToMany(mappedBy="ThemeParent")
 	private Set<Theme> Theme = new HashSet<Theme>();
 
+	// Getters et Setters
 	public Long getId() {
 		return id;
 	}
@@ -58,6 +59,24 @@ public class Theme {
 	}
 	public void setNom(String nom) {
 		Nom = nom;
+	}
+	public Domaine getDomaine() {
+		return domaine;
+	}
+	public void setDomaine(Domaine domaine) {
+		this.domaine = domaine;
+	}
+	public Theme getThemeParent() {
+		return ThemeParent;
+	}
+	public void setThemeParent(Theme themeParent) {
+		ThemeParent = themeParent;
+	}
+	public Set<Theme> getTheme() {
+		return Theme;
+	}
+	public void setTheme(Set<Theme> theme) {
+		Theme = theme;
 	}
 	
 	

@@ -21,6 +21,7 @@ public class Domaine {
 	@Column(name = "Description")
 	private String Description;
 
+	// Getters et Setters
 	public Long getId() {
 		return id;
 	}
