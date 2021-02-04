@@ -38,11 +38,9 @@ public class Formateur {
 	@Column(name = "Blame")
 	private Integer blame;
 
-	/*
 	@OneToMany(mappedBy = "formateur")
 	private List<Enseigner> experience;
-	*/
-	
+		
 	// Getters et Setters
 	public Long getId() {
 		return id;

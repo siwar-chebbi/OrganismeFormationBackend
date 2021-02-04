@@ -1,8 +1,8 @@
 package jags.backend.entities;
 
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,10 +36,10 @@ public class Theme {
 	
 	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="ThemeParent_id")
-	private Theme ThemeParent;
+	private Theme themeParent;
 
-	@OneToMany(mappedBy="ThemeParent")
-	private Set<Theme> Theme = new HashSet<Theme>();
+	@OneToMany(mappedBy="themeParent")
+	private List<Theme> themes = new ArrayList<Theme>();
 
 	// Getters et Setters
 	public Long getId() {
@@ -67,17 +67,18 @@ public class Theme {
 		this.domaine = domaine;
 	}
 	public Theme getThemeParent() {
-		return ThemeParent;
+		return themeParent;
 	}
 	public void setThemeParent(Theme themeParent) {
-		ThemeParent = themeParent;
+		this.themeParent = themeParent;
 	}
-	public Set<Theme> getTheme() {
-		return Theme;
+	public List<Theme> getThemes() {
+		return themes;
 	}
-	public void setTheme(Set<Theme> theme) {
-		Theme = theme;
+	public void setThemes(List<Theme> themes) {
+		this.themes = themes;
 	}
+	
 	
 	
 	

@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -47,16 +48,16 @@ public class Formation {
 	@ManyToOne
 	@JoinColumn(name = "Responsable_id")
 	private Responsable responsable;
-
 	
-	/*
-
+	@OneToMany(mappedBy = "formation")
+	private List<Enseigner> experience;
+	
 	@ManyToMany
 	@JoinTable( name = "Contenir", 
 	joinColumns = @JoinColumn(name = "Formation_id"), 
 	inverseJoinColumns = @JoinColumn (name ="Theme_id"))
 	private List<Theme> themes = new ArrayList<>();
-*/
+
 	public Long getId() {
 		return id;
 	}
