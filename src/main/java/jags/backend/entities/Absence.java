@@ -34,7 +34,6 @@ public class Absence {
 	@Column(name="NumeroSession")
 	private String numeroSession;
 
-
 	@ManyToOne(fetch = FetchType.LAZY)
     @MapsId("id")
 	@JoinColumn(name="Participant_id")

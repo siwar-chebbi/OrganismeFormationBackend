@@ -20,7 +20,6 @@ import javax.persistence.TemporalType;
 @Table(name="Evaluation")
 public class Evaluation {
 	
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -66,9 +65,9 @@ public class Evaluation {
 	private Integer satisfaction;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("id")
+	@MapsId("id")
 	@JoinColumn(name="Participant_id")
-    private Participant participant;
+	private Participant participant;
 
 	public Long getId() {
 		return id;
@@ -186,7 +185,7 @@ public class Evaluation {
 		return participant;
 	}
 
-	public void setParticipant(Participant participant) {
+	public void setParticipantToEvalutaion(Participant participant) {
 		this.participant = participant;
 	}
 }
