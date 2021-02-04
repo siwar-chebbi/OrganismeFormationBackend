@@ -5,9 +5,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -51,6 +55,16 @@ public class Session {
 	@Column(name="DateFin")
 	@DateTimeFormat(pattern = "dd-MM-yyyy:hh:mm:ss")
 	private Date dateFin;
+
+//	@ManyToOne(fetch = FetchType.LAZY)
+//    @MapsId("id")
+//	@JoinColumn(name="Formation_id")
+//    private Formation formation;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("id")
+	@JoinColumn(name="Lieu_id")
+    private Lieu lieu;
 	
 	@OneToMany(mappedBy = "session")
 	private List<Assister> prerequis;
@@ -133,6 +147,22 @@ public class Session {
 
 	public void setPrerequis(List<Assister> prerequis) {
 		this.prerequis = prerequis;
+	}
+
+//	public Formation getFormation() {
+//		return formation;
+//	}
+//
+//	public void setFormation(Formation formation) {
+//		this.formation = formation;
+//	}
+
+	public Lieu getLieu() {
+		return lieu;
+	}
+
+	public void setLieu(Lieu lieu) {
+		this.lieu = lieu;
 	}
 	
 }
