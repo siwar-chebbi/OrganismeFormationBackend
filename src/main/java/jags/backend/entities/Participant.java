@@ -1,6 +1,5 @@
 package jags.backend.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
@@ -24,11 +21,11 @@ public class Participant {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id; 
 
 	@Column(name = "Civilite")
 	private Integer civilite;
-
+	
 	@Column(name = "Nom")
 	private String nom;
 
@@ -38,13 +35,14 @@ public class Participant {
 	@Column(name = "DateNaissance")
 	private String dateNaissance;
 
-	/*@ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("Entreprise_id")
-    private Entreprise entreprise;
-
-	/*@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@MapsId("id")
+	@JoinColumn(name = "Entreprise_id")
+	private Entreprise entreprise;
+	
+	@OneToOne
 	@JoinColumn(name = "Coordonnee_id")
-	private Cordonnee Cordonnee;*/
+	private Cordonnee cordonnee;
 
 	@OneToMany(mappedBy = "participant")
 	private List<Assister> prerequis;
@@ -54,7 +52,7 @@ public class Participant {
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.id = id; 
 	}
 
 	public Integer getCivilite() {
