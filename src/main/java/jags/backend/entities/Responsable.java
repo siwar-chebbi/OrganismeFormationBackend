@@ -84,5 +84,13 @@ public class Responsable {
 		this.telephone = telephone;
 	}
 
+	public List<Formation> getFormations() {
+		return formations;
+	}
+
+	public void setFormations(List<Formation> formations) {
+		this.formations = formations;
+	}
+
 
 }

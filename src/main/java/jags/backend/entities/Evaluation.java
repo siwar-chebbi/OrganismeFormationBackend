@@ -188,4 +188,9 @@ public class Evaluation {
 	public void setParticipantToEvalutaion(Participant participant) {
 		this.participant = participant;
 	}
+
+	// Getter identique a celui d'au dessus
+	public void setParticipant(Participant participant) {
+		this.participant = participant;
+	}
 }
