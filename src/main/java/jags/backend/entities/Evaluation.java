@@ -69,6 +69,19 @@ public class Evaluation {
 	@JoinColumn(name="Participant_id")
 	private Participant participant;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@MapsId("id")
+	@JoinColumn(name="Session_id")
+	private Session session;
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
 	public Long getId() {
 		return id;
 	}

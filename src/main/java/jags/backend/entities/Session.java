@@ -66,6 +66,17 @@ public class Session {
 	@OneToMany(mappedBy = "session")
 	private List<Assister> prerequis;
 
+	@OneToMany(mappedBy = "session")
+	private List<Evaluation> evaluations;
+
+	public List<Evaluation> getEvaluations() {
+		return evaluations;
+	}
+
+	public void setEvaluations(List<Evaluation> evaluations) {
+		this.evaluations = evaluations;
+	}
+
 	public Long getId() {
 		return id;
 	}
