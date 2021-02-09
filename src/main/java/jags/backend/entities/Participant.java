@@ -105,14 +105,6 @@ public class Participant {
 		this.coordonnee = coordonnee;
 	}
 
-	public List<Assister> getPrerequis() {
-		return prerequis;
-	}
-
-	public void setPrerequis(List<Assister> prerequis) {
-		this.prerequis = prerequis;
-	}
-
 	public Coordonnee getCoordonnee() {
 		return coordonnee;
 	}
