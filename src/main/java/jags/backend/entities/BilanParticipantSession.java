@@ -20,6 +20,9 @@ public class BilanParticipantSession {
 	@Column(name="Absence")
 	private Double absence;
 
+	@Column(name="NumeroSessionEval", length = 50)
+	private String numeroSessionEval ;
+
 	@Column(name="Prerequis")
 	private Boolean prerequis;
 
@@ -190,5 +193,13 @@ public class BilanParticipantSession {
 
 	public void setSession(Session session) {
 		this.session = session;
+	}
+
+	public String getNumeroSessionEval() {
+		return numeroSessionEval;
+	}
+
+	public void setNumeroSessionEval(String numeroSessionEval) {
+		this.numeroSessionEval = numeroSessionEval;
 	}
 }

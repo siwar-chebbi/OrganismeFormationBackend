@@ -6,6 +6,4 @@ import jags.backend.entities.BilanParticipantSession;
 
 public interface BilanParticipantSessionRepository extends JpaRepository<BilanParticipantSession, Long>{
 
-	void saveBilanParticipantSession(String numero, Long participantId, Long sessionId);
-
 }

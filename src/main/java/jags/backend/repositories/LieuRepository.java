@@ -6,6 +6,4 @@ import jags.backend.entities.Lieu;
 
 public interface LieuRepository extends JpaRepository<Lieu, Long>{
 
-	void saveById(Long id);
-
 }
