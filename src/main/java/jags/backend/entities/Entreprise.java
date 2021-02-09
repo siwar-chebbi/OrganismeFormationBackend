@@ -23,7 +23,7 @@ public class Entreprise {
 	private String siret;
 
 	@OneToOne(mappedBy = "entreprise")
-	private Cordonnee coordonnee;
+	private Coordonnee coordonnee;
 	
 	@OneToOne(mappedBy = "entreprise")
 	private Participant participant;
@@ -52,11 +52,11 @@ public class Entreprise {
 		this.siret = siret;
 	}
 
-	public Cordonnee getCoordonnee() {
+	public Coordonnee getCoordonnee() {
 		return coordonnee;
 	}
 
-	public void setCoordonnee(Cordonnee coordonnee) {
+	public void setCoordonnee(Coordonnee coordonnee) {
 		this.coordonnee = coordonnee;
 	}
 

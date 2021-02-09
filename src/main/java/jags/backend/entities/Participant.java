@@ -44,7 +44,7 @@ public class Participant {
 	
 	@OneToOne
 	@JoinColumn(name = "Coordonnee_id")
-	private Cordonnee coordonnee;
+	private Coordonnee coordonnee;
 
 	@OneToMany(mappedBy = "participant")
 	private List<Evaluation> evaluations;
@@ -103,11 +103,11 @@ public class Participant {
 		this.entreprise = entreprise;
 	}
 
-	public Cordonnee getCordonnee() {
+	public Coordonnee getCordonnee() {
 		return coordonnee;
 	}
 
-	public void setCordonnee(Cordonnee coordonnee) {
+	public void setCordonnee(Coordonnee coordonnee) {
 		this.coordonnee = coordonnee;
 	}
 
@@ -119,11 +119,11 @@ public class Participant {
 		this.prerequis = prerequis;
 	}
 
-	public Cordonnee getCoordonnee() {
+	public Coordonnee getCoordonnee() {
 		return coordonnee;
 	}
 
-	public void setCoordonnee(Cordonnee coordonnee) {
+	public void setCoordonnee(Coordonnee coordonnee) {
 		this.coordonnee = coordonnee;
 	}
 

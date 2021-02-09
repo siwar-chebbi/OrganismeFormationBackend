@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Coordonnee")
-public class Cordonnee {
+public class Coordonnee {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
