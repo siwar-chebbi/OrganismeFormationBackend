@@ -62,9 +62,17 @@ public class Session {
     @MapsId("id")
 	@JoinColumn(name="Lieu_id")
     private Lieu lieu;
-	
+
 	@OneToMany(mappedBy = "session")
-	private List<Assister> prerequis;
+	private List<BilanParticipantSession> bilanParticipantSessions;
+
+	public List<BilanParticipantSession> getBilanParticipantSessions() {
+		return bilanParticipantSessions;
+	}
+
+	public void setBilanParticipantSessions(List<BilanParticipantSession> bilanParticipantSessions) {
+		this.bilanParticipantSessions = bilanParticipantSessions;
+	}
 
 	public Long getId() {
 		return id;
@@ -136,14 +144,6 @@ public class Session {
 
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
-	}
-
-	public List<Assister> getPrerequis() {
-		return prerequis;
-	}
-
-	public void setPrerequis(List<Assister> prerequis) {
-		this.prerequis = prerequis;
 	}
 
 	public Formation getFormation() {

@@ -1,31 +1,27 @@
 package jags.backend.entities;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 
 @Entity
-@Table(name="Evaluation")
-public class Evaluation {
-	
+@Table(name="BilanParticipantSession")
+public class BilanParticipantSession {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name="NumeroSession", length = 50)
-	private String numeroSession;
+
+	@Column(name="Absence")
+	private Double absence;
+
+	@Column(name="Prerequis")
+	private Boolean prerequis;
 
 	@Column(name="Accueil")
 	private Integer accueil;
@@ -53,21 +49,20 @@ public class Evaluation {
 
 	@Column(name="SouhaitFormation")
 	private Boolean souhaitFormation;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DateEvaluation")
-	private Date dateEvaluation;
 	
 	@Column(name="Recommandation")
 	private Integer recommandation;
 	
 	@Column(name="Satisfaction")
 	private Integer satisfaction;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("id")
-	@JoinColumn(name="Participant_id")
+
+	@ManyToOne
+	@JoinColumn(name = "Participant_id")
 	private Participant participant;
+
+	@ManyToOne
+	@JoinColumn(name = "Session_id")
+	private Session session;
 
 	public Long getId() {
 		return id;
@@ -77,12 +72,20 @@ public class Evaluation {
 		this.id = id;
 	}
 
-	public String getNumeroSession() {
-		return numeroSession;
+	public Double getAbsence() {
+		return absence;
 	}
 
-	public void setNumeroSession(String numeroSession) {
-		this.numeroSession = numeroSession;
+	public void setAbsence(Double absence) {
+		this.absence = absence;
+	}
+
+	public Boolean getPrerequis() {
+		return prerequis;
+	}
+
+	public void setPrerequis(Boolean prerequis) {
+		this.prerequis = prerequis;
 	}
 
 	public Integer getAccueil() {
@@ -157,14 +160,6 @@ public class Evaluation {
 		this.souhaitFormation = souhaitFormation;
 	}
 
-	public Date getDateEvaluation() {
-		return dateEvaluation;
-	}
-
-	public void setDateEvaluation(Date dateEvaluation) {
-		this.dateEvaluation = dateEvaluation;
-	}
-
 	public Integer getRecommandation() {
 		return recommandation;
 	}
@@ -185,12 +180,15 @@ public class Evaluation {
 		return participant;
 	}
 
-	public void setParticipantToEvalutaion(Participant participant) {
+	public void setParticipant(Participant participant) {
 		this.participant = participant;
 	}
 
-	// Getter identique a celui d'au dessus
-	public void setParticipant(Participant participant) {
-		this.participant = participant;
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
 	}
 }
