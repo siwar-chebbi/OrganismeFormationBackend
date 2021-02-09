@@ -20,12 +20,23 @@ public class Lieu {
 	
 	@Column(name="Nom", length=45)
 	private String nom;
-	
+
 	@Column(name="Salle", length=45)
 	private String salle;
-
+	
+	@Column(name="Disponibilite")
+	private Boolean disponibilite;
+	
 	@OneToMany(mappedBy = "lieu")
 	private List<Session> session;
+
+	public Boolean getDisponibilite() {
+		return disponibilite;
+	}
+
+	public void setDisponibilite(Boolean disponibilite) {
+		this.disponibilite = disponibilite;
+	}
 
 	public Long getId() {
 		return id;

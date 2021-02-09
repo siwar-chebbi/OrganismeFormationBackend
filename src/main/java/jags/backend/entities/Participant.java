@@ -47,13 +47,7 @@ public class Participant {
 	private Cordonnee coordonnee;
 
 	@OneToMany(mappedBy = "participant")
-	private List<Evaluation> evaluations;
-	
-	@OneToMany(mappedBy = "participant")
-	private List<Assister> prerequis;
-	
-	@OneToMany(mappedBy = "participant")
-	private List<Absence> absences;
+	private List<BilanParticipantSession> bilanParticipantSessions;
 	
 	public Long getId() {
 		return id;
@@ -111,14 +105,6 @@ public class Participant {
 		this.coordonnee = coordonnee;
 	}
 
-	public List<Assister> getPrerequis() {
-		return prerequis;
-	}
-
-	public void setPrerequis(List<Assister> prerequis) {
-		this.prerequis = prerequis;
-	}
-
 	public Cordonnee getCoordonnee() {
 		return coordonnee;
 	}
@@ -127,19 +113,11 @@ public class Participant {
 		this.coordonnee = coordonnee;
 	}
 
-	public List<Evaluation> getEvaluations() {
-		return evaluations;
+	public List<BilanParticipantSession> getBilanParticipantSessions() {
+		return bilanParticipantSessions;
 	}
 
-	public void setEvaluations(List<Evaluation> evaluations) {
-		this.evaluations = evaluations;
-	}
-
-	public List<Absence> getAbsences() {
-		return absences;
-	}
-
-	public void setAbsences(List<Absence> absences) {
-		this.absences = absences;
+	public void setBilanParticipantSessions(List<BilanParticipantSession> bilanParticipantSessions) {
+		this.bilanParticipantSessions = bilanParticipantSessions;
 	}
 }
