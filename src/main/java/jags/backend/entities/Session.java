@@ -62,19 +62,16 @@ public class Session {
     @MapsId("id")
 	@JoinColumn(name="Lieu_id")
     private Lieu lieu;
-	
-	@OneToMany(mappedBy = "session")
-	private List<Assister> prerequis;
 
 	@OneToMany(mappedBy = "session")
-	private List<Evaluation> evaluations;
+	private List<BilanParticipantSession> bilanParticipantSessions;
 
-	public List<Evaluation> getEvaluations() {
-		return evaluations;
+	public List<BilanParticipantSession> getBilanParticipantSessions() {
+		return bilanParticipantSessions;
 	}
 
-	public void setEvaluations(List<Evaluation> evaluations) {
-		this.evaluations = evaluations;
+	public void setBilanParticipantSessions(List<BilanParticipantSession> bilanParticipantSessions) {
+		this.bilanParticipantSessions = bilanParticipantSessions;
 	}
 
 	public Long getId() {
@@ -147,14 +144,6 @@ public class Session {
 
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
-	}
-
-	public List<Assister> getPrerequis() {
-		return prerequis;
-	}
-
-	public void setPrerequis(List<Assister> prerequis) {
-		this.prerequis = prerequis;
 	}
 
 	public Formation getFormation() {

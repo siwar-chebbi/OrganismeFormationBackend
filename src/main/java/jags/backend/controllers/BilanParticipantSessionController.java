@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jags.backend.entities.Evaluation;
-import jags.backend.services.EvaluationService;
+import jags.backend.entities.BilanParticipantSession;
+import jags.backend.services.BilanParticipantSessionService;
 
 @RestController
-@RequestMapping("evaluations")
+@RequestMapping("bilan")
 @CrossOrigin
-public class EvaluationController {
+public class BilanParticipantSessionController {
 
 	@Autowired
-	EvaluationService service;
+	BilanParticipantSessionService service;
 	
 	@GetMapping("")
-	public List<Evaluation> findAll(){
+	public List<BilanParticipantSession> findAll(){
 		return this.service.findAll();
 	}
 }
