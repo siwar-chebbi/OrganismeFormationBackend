@@ -17,4 +17,9 @@ public class LieuService {
 	public List<Lieu> findAll(){
 		return this.repository.findAll();
 	}
+	
+	public void save(Lieu lieu) {
+		lieu.setDisponibilite(false);
+		this.repository.save(lieu);
+	}
 }
