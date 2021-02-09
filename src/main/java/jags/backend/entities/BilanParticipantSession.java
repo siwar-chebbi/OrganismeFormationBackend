@@ -202,4 +202,5 @@ public class BilanParticipantSession {
 	public void setNumeroSessionEval(String numeroSessionEval) {
 		this.numeroSessionEval = numeroSessionEval;
 	}
+	
 }

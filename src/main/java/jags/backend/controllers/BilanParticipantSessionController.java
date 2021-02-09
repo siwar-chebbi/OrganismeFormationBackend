@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jags.backend.entities.BilanParticipantSession;
 import jags.backend.entities.Coordonnee;
+import jags.backend.entities.Entreprise;
 import jags.backend.services.BilanParticipantSessionService;
 
 @RestController
-@RequestMapping("bilan")
+@RequestMapping("bilanParticipantSessions")
 @CrossOrigin
 public class BilanParticipantSessionController {
 
@@ -29,8 +30,20 @@ public class BilanParticipantSessionController {
 		return this.service.findAll();
 	}
 	
-	@PostMapping("/inscriptionSession/{participantId}/{sessionId}")
-	public void inscriptionSession(@PathVariable Long participantId, @PathVariable Long sessionId, @RequestBody Coordonnee coordonnee) {
-		this.service.inscriptionSession(participantId, sessionId, coordonnee);
+	@PostMapping("/inscriptionSessionParticulier/{participantId}/{sessionId}")
+	public void inscriptionSessionParticulier(@PathVariable Long participantId, @PathVariable Long sessionId, @RequestBody Coordonnee coordonnee) {
+		this.service.inscriptionSessionParticulier(participantId, sessionId, coordonnee);
 	}
+	
+	@PostMapping("/inscriptionSessionEntreprise/{participantId}/{sessionId}")
+	public void inscriptionSession(@PathVariable Long participantId, @PathVariable Long sessionId, @RequestBody String bodyRequest) {
+		this.service.inscriptionSessionEntreprise(participantId, sessionId, bodyRequest);
+	}
+	
+	@PutMapping("/evaluations")
+	public void evaluationSession(@RequestBody BilanParticipantSession bilanParticipantSession) {
+		this.service.evaluationSession(bilanParticipantSession);
+	}
+	
+	
 }
