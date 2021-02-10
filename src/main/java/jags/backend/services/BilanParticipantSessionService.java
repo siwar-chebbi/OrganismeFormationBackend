@@ -19,6 +19,8 @@ public class BilanParticipantSessionService {
 
 	@Autowired
 	private BilanParticipantSessionRepository repository;
+	
+	//Service
 	@Autowired
 	private CoordonneeService coordonneeService;
 	@Autowired
@@ -30,10 +32,13 @@ public class BilanParticipantSessionService {
 	@Autowired
 	private EntrepriseService entrepriseService;
 	
-	private Entreprise entreprise = new Entreprise();
-	private Coordonnee coordonnee = new Coordonnee();
-	private BilanParticipantSession bilan = new BilanParticipantSession();
-	
+	//Entities
+	@Autowired
+	private Entreprise entreprise;
+	@Autowired
+	private Coordonnee coordonnee;
+	@Autowired
+	private BilanParticipantSession bilan;
 	
 	public List<BilanParticipantSession> findAll(){
 		return this.repository.findAll();
@@ -72,9 +77,7 @@ public class BilanParticipantSessionService {
 		Session session = this.sessionService.findById(sessionId);
 		Participant participant = this.participantService.findById(participantId);
 		// create dans bilanParticipantSession
-		bilan.setParticipant(participant);
-		bilan.setSession(session);
-		bilan.setNumeroSessionEval(session.getNumero());
+		setInscriptionBilan(participant, session);
 		this.repository.save(bilan);
 		// Découpage des infos body
 		splitBody(bodyRequest);
