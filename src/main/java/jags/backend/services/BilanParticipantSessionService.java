@@ -36,10 +36,20 @@ public class BilanParticipantSessionService {
 	@Autowired
 	private Entreprise entreprise;
 	@Autowired
-	private Coordonnee coordonnee;
+	private Coordonnee coordonneeParticipant;
 	@Autowired
 	private BilanParticipantSession bilan;
-	
+	@Autowired
+	private Participant participant;
+	@Autowired
+	private Session session;
+
+	private Coordonnee coordonneeEntreprise = coordonneeParticipant;
+
+	/**
+	 * Méthode permettant de récuperer tout les objets BilanParticipantSession
+	 * @return Une liste contenant tout les objets BilanParticipantSession
+	 */
 	public List<BilanParticipantSession> findAll(){
 		return this.repository.findAll();
 	}
@@ -50,20 +60,38 @@ public class BilanParticipantSessionService {
 	 * @param sessionId 	id de la session à enregistrer
 	 * @param coordonnee	objet Coordonnee contenant les valeur d'evaluation de la session du participant
 	 */
-	public void inscriptionSessionParticulier(Long participantId, Long sessionId, Coordonnee coordonnee) {
+	public void inscriptionSessionParticulier(Long participantId, Long sessionId, Coordonnee coordonneeTemp) {
 		//lecture dans session
-		Session session = this.sessionService.findById(sessionId);
-		Participant participant = this.participantService.findById(participantId);
+		session = this.sessionService.findById(sessionId);
+		participant = this.participantService.findById(participantId);
 		// create dans bilanParticipantSession
 		setInscriptionBilan(participant, session);
 		this.repository.save(bilan);
-		// create dans coordonnées
-		this.coordonneeService.save(coordonnee);
+		// Appel de méthode
+		sauvegardeCoordonneeParticipant(coordonneeTemp);
 		// update dans lieu
 		this.lieuService.save(session.getLieu());
-		// update participant avec l'id coordonnee
-		participant.setCoordonnee(coordonnee);
 		this.participantService.save(participant);
+	}
+	
+	
+	public void sauvegardeCoordonneeParticipant(Coordonnee coordonneeTemp) {
+		
+		if(this.coordonneeService.existsCoordonneeByMail(coordonneeTemp.getMail())) {
+			// Récupération de l'objet contenu en table par le mail de la requestBody
+			coordonneeParticipant = this.coordonneeService.findByMail(coordonneeTemp.getMail());
+			// Récupération de l'id
+			coordonneeTemp.setId(coordonneeParticipant.getId());
+			//coordonnee.setId(this.coordonneeService.findIdByMail(coordonneeTemp.getMail()));
+			this.coordonneeService.save(coordonneeTemp);
+			// update participant avec l'id coordonnee
+			participant.setCoordonnee(coordonneeTemp);
+		} else {
+			// create dans coordonnées
+			this.coordonneeService.save(coordonneeTemp);
+			// update participant avec l'id coordonnee
+			participant.setCoordonnee(coordonneeTemp);
+		}
 	}
 	
 	/**
@@ -74,23 +102,46 @@ public class BilanParticipantSessionService {
 	 */
 	public void inscriptionSessionEntreprise(Long participantId, Long sessionId, String bodyRequest) {
 		//lecture
-		Session session = this.sessionService.findById(sessionId);
-		Participant participant = this.participantService.findById(participantId);
+		session = this.sessionService.findById(sessionId);
+		participant = this.participantService.findById(participantId);
 		// create dans bilanParticipantSession
+		System.out.println("setInscriptionBilan");
 		setInscriptionBilan(participant, session);
 		this.repository.save(bilan);
 		// Découpage des infos body
+		System.out.println("splitBody");
 		splitBody(bodyRequest);
-		// Create dans entreprise
-		this.entrepriseService.save(entreprise);
-		// create dans coordonnées
-		coordonnee.setEntreprise(entreprise);
-		this.coordonneeService.save(coordonnee);
-		// update dans lieu
-		this.lieuService.save(session.getLieu());
-		// update participant avec l'id entreprise
-		participant.setEntreprise(entreprise);
-		this.participantService.save(participant);
+		
+		System.out.println("Sauvegarde coordonnee participant :" + coordonneeParticipant.getMail());
+		System.out.println("Sauvegarde coordonnee participant :" + coordonneeParticipant.getVille());
+		System.out.println("Avant Sauvegarde coordonnee entreprise :" + coordonneeEntreprise.getMail());
+		System.out.println("Avant Sauvegarde coordonnee entreprise :" + coordonneeEntreprise.getVille());
+		sauvegardeCoordonneeParticipant(coordonneeParticipant);
+		System.out.println("Après Sauvegarde coordonnee entreprise :" + coordonneeEntreprise.getMail());
+				
+		if(!this.entrepriseService.existsEntrepriseBySiret(entreprise.getSiret())) {
+			// Create dans entreprise
+			System.out.println("If !siret exists");
+			
+			this.entrepriseService.save(entreprise);
+			// create dans coordonnées
+			System.out.println("Sauvegarde coordonnee entreprise :" + coordonneeEntreprise.getMail());
+			coordonneeEntreprise.setEntreprise(entreprise);
+			System.out.println("Sauvegarde coordonnee entreprise :" + coordonneeEntreprise.getMail());
+			this.coordonneeService.save(coordonneeEntreprise);
+		}
+//			 //update dans lieu
+//			this.lieuService.save(session.getLieu());
+//			 //update participant avec l'id entreprise
+			System.out.println("Save participant");
+			participant.setEntreprise(entreprise);
+			this.participantService.save(participant);
+
+			// A voir front 
+			// sauvegarder les coordonnées participant 
+			// si existe 
+			// sinon	
+			// Si le partcipant à déjà une entreprise
 	}
 	
 	/**
@@ -109,15 +160,27 @@ public class BilanParticipantSessionService {
 	 */
 	public void splitBody(String bodyRequest) {
 		String[] parts = bodyRequest.split(";");
-		coordonnee.setCodePostal(parts[0]);;
-		coordonnee.setMail(parts[1]);;
-		coordonnee.setPays(parts[2]);;
-		coordonnee.setNumeroVoie(parts[3]);;
-		coordonnee.setTelephone(parts[4]);;
-		coordonnee.setTypeVoie(parts[5]);;
-		coordonnee.setVille(parts[6]);;
+		System.out.println("Sauvegarde coordonneeEntreprise :" + parts[1]);
+		coordonneeEntreprise.setCodePostal(parts[0]);
+		coordonneeEntreprise.setMail(parts[1]);
+		coordonneeEntreprise.setPays(parts[2]);
+		coordonneeEntreprise.setNumeroVoie(parts[3]);
+		coordonneeEntreprise.setTelephone(parts[4]);
+		coordonneeEntreprise.setTypeVoie(parts[5]);
+		coordonneeEntreprise.setVille(parts[6]);
 		entreprise.setSiret(parts[7]);
 		entreprise.setNom(parts[8]);
+		coordonneeParticipant.setCodePostal(parts[9]);
+		System.out.println("Sauvegarde coordonneeParticipant :" + parts[10]);
+		coordonneeParticipant.setMail(parts[10]);
+		coordonneeParticipant.setPays(parts[11]);
+		coordonneeParticipant.setNumeroVoie(parts[12]);
+		coordonneeParticipant.setTelephone(parts[13]);
+		coordonneeParticipant.setTypeVoie(parts[14]);
+		coordonneeParticipant.setVille(parts[15]);
+		System.out.println("Sauvegarde coordonnee entreprise :" + coordonneeEntreprise.getMail());
+		System.out.println("Sauvegarde coordonneeParticipant :" + coordonneeParticipant.getMail());
+		
 	}
 	
 	/**

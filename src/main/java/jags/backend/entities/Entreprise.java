@@ -8,7 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 @Entity
+@Component
 @Table(name = "Entreprise")
 public class Entreprise {
 	
@@ -19,7 +22,7 @@ public class Entreprise {
 	@Column(name = "Nom", length = 60)
 	private String nom;
 
-	@Column(name = "Siret",  length = 20)
+	@Column(name = "Siret",  length = 20, unique = true)
 	private String siret;
 
 	@OneToOne(mappedBy = "entreprise")

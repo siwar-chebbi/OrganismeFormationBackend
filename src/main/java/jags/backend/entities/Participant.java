@@ -16,8 +16,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.stereotype.Component;
+
 
 @Entity
+@Component
 @Table(name = "Participant")
 public class Participant {
 
@@ -96,15 +99,7 @@ public class Participant {
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
-
-	public Coordonnee getCordonnee() {
-		return coordonnee;
-	}
-
-	public void setCordonnee(Coordonnee coordonnee) {
-		this.coordonnee = coordonnee;
-	}
-
+	
 	public Coordonnee getCoordonnee() {
 		return coordonnee;
 	}

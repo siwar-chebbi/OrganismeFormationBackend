@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/projet_fil_rouge?serverTimezone=UTC&useLegacyDatetimeCode=false
     username: root
-    password: Gseynav1.
+    password: root
 
   jpa:
     hibernate:

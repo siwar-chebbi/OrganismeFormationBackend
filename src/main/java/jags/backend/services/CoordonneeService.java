@@ -21,4 +21,12 @@ public class CoordonneeService {
 	public Coordonnee save(Coordonnee entity) {
 		return repository.save(entity);
 	}
+
+	public Boolean existsCoordonneeByMail(String mail) {
+		return repository.existsCoordonneeByMail(mail);
+	}
+
+	public Coordonnee findByMail(String mail) {
+		return repository.findByMail(mail);
+	}
 }

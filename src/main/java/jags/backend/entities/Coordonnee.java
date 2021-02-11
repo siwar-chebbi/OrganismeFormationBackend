@@ -9,7 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 @Entity
+@Component
 @Table(name = "Coordonnee")
 public class Coordonnee {
 	
@@ -32,7 +35,7 @@ public class Coordonnee {
 	@Column(name = "Pays", length = 100)
 	private String pays;
 	
-	@Column(name = "Mail", length = 60)
+	@Column(name = "Mail", length = 60, unique = true)
 	private String mail;
 	
 	@Column(name = "Telephone", length = 20)

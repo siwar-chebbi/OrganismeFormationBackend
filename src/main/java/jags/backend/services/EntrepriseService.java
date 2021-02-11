@@ -15,10 +15,18 @@ public class EntrepriseService {
 	private EntrepriseRepository repository;
 	
 	public List<Entreprise> findAll(){
-		return repository.findAll();
+		return this.repository.findAll();
 	}
 	
 	public Entreprise save(Entreprise entity) {
-		return repository.save(entity);
+		return this.repository.save(entity);
+	}
+
+	public Entreprise findBySiret(String siret) {
+		return this.repository.findBySiret(siret);
+		
+	}
+	public Boolean existsEntrepriseBySiret(String siret) {
+		return this.repository.existsEntrepriseBySiret(siret);
 	}
 }

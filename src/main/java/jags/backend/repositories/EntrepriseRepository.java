@@ -6,4 +6,7 @@ import jags.backend.entities.Entreprise;
 
 public interface EntrepriseRepository extends JpaRepository<Entreprise, Long> {
 
+	Entreprise findBySiret(String siret);
+
+	Boolean existsEntrepriseBySiret(String siret);
 }
