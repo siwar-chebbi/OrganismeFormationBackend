@@ -1,14 +1,9 @@
 package jags.backend.services;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.persistence.Column;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import jags.backend.entities.BilanParticipantSession;
 import jags.backend.entities.Coordonnee;
 import jags.backend.entities.Entreprise;
@@ -49,119 +44,119 @@ public class BilanParticipantSessionService {
 	List<String> bodyRequestSplit = new ArrayList<String>();
 
 	/**
-	 * Méthode permettant de récuperer tout les objets BilanParticipantSession
-	 * @return Une liste contenant tout les objets BilanParticipantSession
+	 * Recuperation de tous les bilans de la base de donnees
+	 * @return Une liste contenant tout les bilans contenu dans la base de donnees
 	 */
 	public List<BilanParticipantSession> findAll(){
 		return this.repository.findAll();
 	}
 	
 	/**
-	 * Méthode permettant l'inscription d'un utilisateur dit particulier (sans entreprise) à une session
-	 * @param participantId id du participant à enregistrer
-	 * @param sessionId 	id de la session à enregistrer
-	 * @param coordonnee	objet Coordonnee contenant les valeur d'evaluation de la session du participant
+	 * Inscription d'un participant particulier, ne possedant pas d'entreprise, a une session 
+	 * @param participantId : id du participant, requis pour l'insertion dans la table bilan
+	 * @param sessionId : id de la session, requis pour l'insertion dans la table bilan
+	 * @param coordonnee : les coordonnes du particpant a ajouter ou mettre a jour dans la base de donnees
 	 */
-	public void inscriptionSessionParticulier(Long participantId, Long sessionId, Coordonnee coordonneeTemp) {
-		//Recuperation session et participant
-		getSessionAndParticipant(participantId, sessionId);
-		
-		// create dans bilanParticipantSession
-		setInscriptionBilan(participant, session);
-		
-		// Appel de méthode
-		sauvegardeCoordonneeParticipant(coordonneeTemp);
-		
-		// update dans lieu
+	public void inscriptionSessionParticulier(Long participantId, Long sessionId, Coordonnee coordonnee) {
+		traitementBilanEtCoordonneeParticipant(participantId, sessionId, coordonnee);
 		this.lieuService.save(session.getLieu());
 		this.participantService.save(participant);
 	}
 	
 	/**
-	 * Méthode permettant l'inscription d'un utilisateur dit ayant une entreprise à une session
-	 * @param participantId id du participant à enregistrer
-	 * @param sessionId 	id de la session à enregistrer
-	 * @param coordonnee	objet Coordonnee contenant les valeur d'evaluation de la session du participant
+	 * Traitement pour l'inscription d'un nouveau bilan en base de donnee
+	 * @param participantId : Id du participant a inscrire dans le bilan
+	 * @param sessionId : Id de la session a inscrire dans le bilan
+	 */
+	public void traitementBilanEtCoordonneeParticipant(Long participantId, Long sessionId, Coordonnee coordonnee) {
+		recuperationSessionEtParticipantParId(participantId, sessionId);
+		alimentationBilanParticipantEtSession();
+		creationBilan();
+		sauvegardeCoordonneeParticipant(coordonnee);
+	}
+	
+	/**
+	 * Alimentation du bilan avec le participant (id) et la session (id et numero de session)
+	 */
+	public void alimentationBilanParticipantEtSession() {
+		bilan.setParticipant(participant);
+		bilan.setSession(session);
+		bilan.setNumeroSessionEval(session.getNumero());
+	}
+	
+	/**
+	 * Inscription d'un participant, ayant une entreprise, a une session
+	 * @param participantId : id du participant, requis pour l'insertion dans la table bilan
+	 * @param sessionId : id de la session, requis pour l'insertion dans la table bilan
+	 * @param bodyRequest String contenant les coordonnes du participant, de l'entreprise
+	 *  et les informations de l'entreprise
 	 */
 	public void inscriptionSessionEntreprise(Long participantId, Long sessionId, String bodyRequest) {
-		//Recuperation session et participant
-		getSessionAndParticipant(participantId, sessionId);
-		
-		// create dans bilanParticipantSession
-		setInscriptionBilan(participant, session);
-		
-		// Découpage des infos body
 		splitBody(bodyRequest);
-		
-		// Add / update coordoonnee participant
 		getCoordonneeParticipant(bodyRequestSplit);
-		sauvegardeCoordonneeParticipant(coordonnee);
-				
-		// Add coordonnee entreprise + entreprise
-		sauvegardeCoordonneeEntreprise();
-		
-		 //update dans lieu
+		traitementBilanEtCoordonneeParticipant(participantId, sessionId, coordonnee);
+		sauvegardeEntrepriseParticipant();
 		this.lieuService.save(session.getLieu());
-		
-		 //update participant avec l'id entreprise
-		participant.setEntreprise(entreprise);
 		this.participantService.save(participant);
-		
-		// A voir front 
-		// sauvegarder les coordonnées participant 
-		// Si le partcipant à déjà une entreprise
 	}
 	
 	/**
-	 * Methode permettant de récupérer les informations sur le participant et la session qu'il choisit
-	 * @param participantId l'id du participant recu via url
-	 * @param sessionId l'id de la session recu via url
+	 * Sauvegarde d'une entreprise en base de donnees et recuperation de son Id
 	 */
-	public void getSessionAndParticipant(Long participantId, Long sessionId) {
+	public void sauvegardeEntrepriseParticipant() {
+		updateEntreprise();
+		participant.setEntreprise(entreprise);
+		sauvegardeCoordonneeEntreprise();
+	}
+	
+	/**
+	 * Recuperation du participant et de la session en fonction de leur ID
+	 * @param participantId : Id du participant a recuperer
+	 * @param sessionId : Id de la session a recuperer
+	 */
+	public void recuperationSessionEtParticipantParId(Long participantId, Long sessionId) {
 		session = this.sessionService.findById(sessionId);
 		participant = this.participantService.findById(participantId);
 		
 	}
 	
 	/**
-	 * Methode permettant de create / update les coordonnees du participant
-	 * @param coordonneeTemp coordonee du participant
+	 * Sauvegarde des coordonnee du participant en base de donnee et recuperation de son ID
+	 * @param coordonneeTemp coordonee du participant a sauvegarder
 	 */
-	public void sauvegardeCoordonneeParticipant(Coordonnee coordonneeTemp) {
-		
-		if(this.coordonneeService.existsCoordonneeByMail(coordonneeTemp.getMail())) {
-			// Récupération de l'objet contenu en table par le mail de la requestBody
-			coordonnee = this.coordonneeService.findByMail(coordonneeTemp.getMail());
-			// Récupération de l'id
-			coordonneeTemp.setId(coordonnee.getId());
-			this.coordonneeService.save(coordonneeTemp);
-			// update participant avec l'id coordonnee
-			participant.setCoordonnee(coordonneeTemp);
-		} else {
-			// create dans coordonnées
-			this.coordonneeService.save(coordonneeTemp);
-			// update participant avec l'id coordonnee
-			participant.setCoordonnee(coordonneeTemp);
-		}
+	public void sauvegardeCoordonneeParticipant(Coordonnee coordonnee) {
+		updateCoordonnee(coordonnee);
+		// update participant avec l'id coordonnee
+		participant.setCoordonnee(coordonnee);
 	}
 	
+	/**
+	 * Methode sauvegardant les coordonnees en base de donnees et de recuperer son id
+	 * @param coordonnee les coordonnes a sauvegarder en base de donnees
+	 */
+	public void updateCoordonnee(Coordonnee coordonnee) {
+		this.coordonneeService.save(coordonnee);
+		Long id = this.coordonneeService.findIdByMail(coordonnee.getMail());
+		coordonnee.setId(id);
+	}
 
 	/**
-	 * Methode permettant de create les coordonnees d'une entreprise
+	 * Sauvegarde des coordonnees de l'entreprise en base de donnees 
 	 */
 	public void sauvegardeCoordonneeEntreprise() {
-		getDetailsEntreprise(bodyRequestSplit);
-		if(!this.entrepriseService.existsEntrepriseBySiret(entreprise.getSiret())) {
-			// Create dans entreprise
-			this.entrepriseService.save(entreprise);
-			// create dans coordonnées
-			getCoordonneeEntreprise(bodyRequestSplit);
-			coordonnee.setEntreprise(entreprise);
-			this.coordonneeService.save(coordonnee);
-		} else {
-			Entreprise entrepriseTemp = this.entrepriseService.findBySiret(entreprise.getSiret());
-			entreprise.setId(entrepriseTemp.getId());
-		}
+		getCoordonneeEntreprise(bodyRequestSplit);
+		coordonnee.setEntreprise(entreprise);
+		this.coordonneeService.save(coordonnee);
+	}
+	
+	/**
+	 * Creation / mise a jours des informations de l'entreprise en base de donnees et recuperation de son ID
+	 */
+	public void updateEntreprise() {
+		recupererDetailsEntreprise(bodyRequestSplit);
+		this.entrepriseService.save(entreprise);
+		Long id = this.entrepriseService.findIdBySiret(entreprise.getSiret());
+		entreprise.setId(id);
 	}
 	
 	/**
@@ -175,34 +170,22 @@ public class BilanParticipantSessionService {
 	}
 	
 	/**
-	 * Methode permettant de découper le bodyRequest
-	 * @param bodyRequest Les données issues du formulaire d'inscription pour un utilisateur ayant une entreprise
+	 * Methode permettant de découper le string contenant les coordonnee du participant et de l'entreprise
+	 *  ainsi que les details de l'entreprise en element separes
+	 * @param bodyRequest String contenant les coordonnes du participant, de l'entreprise
+	 *  et les informations de l'entreprise
 	 */
-	public void splitBody(String bodyRequest) {
+	public List<String> splitBody(String bodyRequest) {
 		String parts[] = bodyRequest.split(";");
 		for (int i = 0; i < parts.length; i++) {
 			bodyRequestSplit.add(i, parts[i]);
 		}
-	}
-
-	/**
-	 * Methode permettant la récupération des coordonnees d'une entreprise à partir des informations provenant du bodyRequest
-	 * @param bodyRequestSplit Les informations issues du bodyRequest
-	 */
-	public void getCoordonneeEntreprise(List<String> bodyRequestSplit) {
-		coordonnee = new Coordonnee();
-		coordonnee.setCodePostal(bodyRequestSplit.get(0));
-		coordonnee.setMail(bodyRequestSplit.get(1));
-		coordonnee.setPays(bodyRequestSplit.get(2));
-		coordonnee.setNumeroVoie(bodyRequestSplit.get(3));
-		coordonnee.setTelephone(bodyRequestSplit.get(4));
-		coordonnee.setTypeVoie(bodyRequestSplit.get(5));
-		coordonnee.setVille(bodyRequestSplit.get(6));
+		return bodyRequestSplit;
 	}
 	
 	/**
-	 * Methode permettant la récupération des coordonnees d'un participant à partir des informations provenant du bodyRequest
-	 * @param bodyRequestSplit Les informations issues du bodyRequest
+	 * Recuperation des coordonnees d'un participant à partir des informations provenant du bodyRequest
+	 * @param bodyRequestSplit Liste contenant les elements lies aux coordonnees et details de l'entreprise
 	 */
 	public void getCoordonneeParticipant(List<String> bodyRequestSplit) {
 		coordonnee = new Coordonnee();
@@ -216,24 +199,34 @@ public class BilanParticipantSessionService {
 	}
 	
 	/**
-	 * Methode permettant la récupération des données d'une entreprise à partir des informations provenant du bodyRequest
-	 * @param bodyRequestSplit Les informations issues du bodyRequest
+	 * Recuperation des coordonnees d'une entreprise à partir des informations provenant du bodyRequest
+	 * @param bodyRequestSplit Liste contenant les elements lies aux coordonnees et details de l'entreprise
 	 */
-	public void getDetailsEntreprise(List<String> bodyRequestSplit) {
+	public void getCoordonneeEntreprise(List<String> bodyRequestSplit) {
+		coordonnee = new Coordonnee();
+		coordonnee.setCodePostal(bodyRequestSplit.get(0));
+		coordonnee.setMail(bodyRequestSplit.get(1));
+		coordonnee.setPays(bodyRequestSplit.get(2));
+		coordonnee.setNumeroVoie(bodyRequestSplit.get(3));
+		coordonnee.setTelephone(bodyRequestSplit.get(4));
+		coordonnee.setTypeVoie(bodyRequestSplit.get(5));
+		coordonnee.setVille(bodyRequestSplit.get(6));
+	}
+	
+	/**
+	 * Recuperation des details d'une entreprise à partir des informations provenant du bodyRequest
+	 * @param bodyRequestSplit Liste contenant les elements lies aux coordonnees et details de l'entreprise
+	 */
+	public void recupererDetailsEntreprise(List<String> bodyRequestSplit) {
 		entreprise.setSiret(bodyRequestSplit.get(7));
 		entreprise.setNom(bodyRequestSplit.get(8));
 		
 	}
 	
 	/**
-	 * Methode permettant de renseigner les valeur requise pour l'inscription d'un participant à une session
-	 * @param participant 	l'objet participant pour retrouver son id
-	 * @param session 		l'objet session pour retrouver son id
+	 * Ajout du bilan en base de donnees 
 	 */
-	public void setInscriptionBilan(Participant participant, Session session) {
-		bilan.setParticipant(participant);
-		bilan.setSession(session);
-		bilan.setNumeroSessionEval(session.getNumero());
+	public void creationBilan() {
 		this.repository.save(bilan);
 	}
 }
