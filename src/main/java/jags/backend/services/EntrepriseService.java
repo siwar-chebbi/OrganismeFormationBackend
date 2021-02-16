@@ -3,10 +3,13 @@ package jags.backend.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import jags.backend.entities.Coordonnee;
 import jags.backend.entities.Entreprise;
+import jags.backend.entities.Participant;
 import jags.backend.repositories.EntrepriseRepository;
 
 @Service
@@ -73,5 +76,10 @@ public class EntrepriseService {
 	public Long findIdBySiret(String siret) {
 		entreprise = findBySiret(siret);
 		return entreprise.getId();
+	}
+
+	public Entreprise findById(Long entrepriseId) {
+		return this.repository.findById(entrepriseId)
+							.orElseThrow(() ->  new ResponseStatusException (HttpStatus.NOT_FOUND));
 	}
 }

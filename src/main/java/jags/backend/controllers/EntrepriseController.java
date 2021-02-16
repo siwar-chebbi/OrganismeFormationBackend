@@ -30,4 +30,5 @@ public class EntrepriseController {
 	public Entreprise save(@RequestBody Entreprise entity) {
 		return this.service.save(entity);
 	}
+	
 }

@@ -1,16 +1,23 @@
 package jags.backend.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Component
 @Table(name = "Entreprise")
 public class Entreprise {
@@ -28,8 +35,8 @@ public class Entreprise {
 	@OneToOne(mappedBy = "entreprise")
 	private Coordonnee coordonnee;
 	
-	@OneToOne(mappedBy = "entreprise")
-	private Participant participant;
+	@OneToMany(mappedBy = "entreprise")
+	private List<Participant> participant;
 	
 	public Long getId() {
 		return id;
@@ -54,22 +61,4 @@ public class Entreprise {
 	public void setSiret(String siret) {
 		this.siret = siret;
 	}
-
-	public Coordonnee getCoordonnee() {
-		return coordonnee;
-	}
-
-	public void setCoordonnee(Coordonnee coordonnee) {
-		this.coordonnee = coordonnee;
-	}
-
-	public Participant getParticipant() {
-		return participant;
-	}
-
-	public void setParticipant(Participant participant) {
-		this.participant = participant;
-	}
-	
-	
 }

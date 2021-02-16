@@ -11,7 +11,11 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Component
 @Table(name = "Coordonnee")
 public class Coordonnee {
@@ -119,13 +123,4 @@ public class Coordonnee {
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
-
-	public Participant getParticipant() {
-		return participant;
-	}
-
-	public void setParticipant(Participant participant) {
-		this.participant = participant;
-	}
-	
 }

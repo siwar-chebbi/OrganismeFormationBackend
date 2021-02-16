@@ -18,8 +18,12 @@ import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Component
 @Table(name = "Participant")
 public class Participant {
@@ -106,13 +110,5 @@ public class Participant {
 
 	public void setCoordonnee(Coordonnee coordonnee) {
 		this.coordonnee = coordonnee;
-	}
-
-	public List<BilanParticipantSession> getBilanParticipantSessions() {
-		return bilanParticipantSessions;
-	}
-
-	public void setBilanParticipantSessions(List<BilanParticipantSession> bilanParticipantSessions) {
-		this.bilanParticipantSessions = bilanParticipantSessions;
 	}
 }
