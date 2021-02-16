@@ -229,4 +229,9 @@ public class BilanParticipantSessionService {
 	public void creationBilan() {
 		this.repository.save(bilan);
 	}
+
+	public void deleteByParticipantIdAndSessionId(Long participantId, Long sessionId) {
+		this.repository.deleteByParticipantIdAndSessionId(participantId, sessionId);
+		
+	}
 }

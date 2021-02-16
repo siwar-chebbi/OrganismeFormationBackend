@@ -16,10 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.stereotype.Component;
-
-
 
 @Entity
 @Component
@@ -68,14 +67,6 @@ public class Session {
 
 	@OneToMany(mappedBy = "session")
 	private List<BilanParticipantSession> bilanParticipantSessions;
-
-	public List<BilanParticipantSession> getBilanParticipantSessions() {
-		return bilanParticipantSessions;
-	}
-
-	public void setBilanParticipantSessions(List<BilanParticipantSession> bilanParticipantSessions) {
-		this.bilanParticipantSessions = bilanParticipantSessions;
-	}
 
 	public Long getId() {
 		return id;

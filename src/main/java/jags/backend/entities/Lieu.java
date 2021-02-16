@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 public class Lieu {
 
 	@Id
+	@Column(unique = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
@@ -26,7 +28,7 @@ public class Lieu {
 	
 	@Column(name="Disponibilite")
 	private Boolean disponibilite;
-	
+
 	@OneToMany(mappedBy = "lieu")
 	private List<Session> session;
 
@@ -60,14 +62,5 @@ public class Lieu {
 
 	public void setSalle(String salle) {
 		this.salle = salle;
-	}
-
-	public List<Session> getSession() {
-		return session;
-	}
-
-	public void setSession(List<Session> session) {
-		this.session = session;
-	}
-	
+	}	
 }

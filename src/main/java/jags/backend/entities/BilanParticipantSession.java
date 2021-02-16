@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 public class BilanParticipantSession {
 
 	@Id
+	@Column(unique = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
