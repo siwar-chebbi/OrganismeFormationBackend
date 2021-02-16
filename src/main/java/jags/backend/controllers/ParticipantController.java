@@ -2,11 +2,10 @@ package jags.backend.controllers;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +25,16 @@ public class ParticipantController {
 	@GetMapping("")
 	public List<Participant> findAll() {
 		return this.service.findAll();
+	}
+	
+	@GetMapping("/entreprise/{entrepriseId}")
+	public List<Participant> findByEntreprise(@PathVariable Long entrepriseId) {
+		return this.service.findByEntreprise(entrepriseId);
+	}
+	
+	@GetMapping("/{participantId}")
+	public Participant findById(@PathVariable Long participantId) {
+		return this.service.findById(participantId);
 	}
 	
 	@PostMapping("")
