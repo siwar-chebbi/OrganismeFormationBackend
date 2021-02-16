@@ -10,5 +10,4 @@ import jags.backend.entities.Participant;
 public interface ParticipantRepository extends JpaRepository<Participant, Long>  {
 
 	List<Participant> findByEntreprise(Entreprise entrepriseId);
-	
 }

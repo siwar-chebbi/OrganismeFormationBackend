@@ -41,4 +41,9 @@ public class ParticipantController {
 	public Participant save(@RequestBody Participant entity) {
 		return this.service.save(entity);
 	}
+	
+	@GetMapping("/session/{sessionId}")
+	public List<Participant> findParticipantBySessionId(@PathVariable Long sessionId){
+		return this.service.findParticipantBySessionId(sessionId);
+	}
 }

@@ -12,9 +12,9 @@ public interface LieuRepository extends JpaRepository<Lieu, Long>{
 //	List<Lieu> finbByDisponibilite(Boolean bool);
 
 	//todo
-	@Query("SELECT * FROM lieu as l"
-			+ "inner join session as s on l.id = s.lieu_id "
-			+ "where s.id = ?1)")
+	@Query("SELECT * FROM lieu AS l"
+			+ "INNER JOIN session AS s on l.id = s.lieu_id "
+			+ "WHERE s.id = ?1)")
 	List<Lieu> findLieuBySessionId(Long sessionId);
 
 }

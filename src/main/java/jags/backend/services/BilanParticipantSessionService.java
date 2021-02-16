@@ -234,4 +234,8 @@ public class BilanParticipantSessionService {
 		this.repository.deleteByParticipantIdAndSessionId(participantId, sessionId);
 		
 	}
+
+	public List<BilanParticipantSession> findParticipantBySessionId(Long sessionId) {
+		return this.repository.findParticipantBySessionId(sessionId);
+	}
 }
