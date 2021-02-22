@@ -48,6 +48,7 @@ Installer [Git](https://git-scm.com/downloads)
 ### Étape 2: Récupération du projet 
 
 Pour récupérer le projet placé vous dans un répertoire, pour stocker ce dernier à cet endroit.
+Puis effectuer cette commande dans cmd :
 
 git clone https://github.com/siwar-chebbi/OrganismeFormationBackend.git
 
