@@ -17,6 +17,10 @@ public class CoordonneeService {
 	@Autowired
 	private Coordonnee coordonnee;
 
+	/**
+	 * Récupère toutes les coordonnées contenu dans la bdd
+	 * @return la liste de toutes les coordonnées 
+	 */
 	public List<Coordonnee> findAll() {
 		return repository.findAll();
 	}

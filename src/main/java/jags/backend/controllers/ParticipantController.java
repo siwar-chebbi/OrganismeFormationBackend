@@ -38,7 +38,7 @@ public class ParticipantController {
 	}
 	
 	@PostMapping("")
-	public Participant save(@RequestBody Participant entity) {
-		return this.service.save(entity);
+	public Participant save(@RequestBody Participant participant) {
+		return this.service.save(participant);
 	}
 }
