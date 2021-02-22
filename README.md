@@ -33,15 +33,15 @@ Pour utiliser correctement ce projet veuillez suivre ces étapes attentivement.
 
 ### Étape 1: Installation prérequis
 
-- a) Dans un premier temps :
+- Dans un premier temps :
 Installer [SpringToolsSuits](https://spring.io/tools)
 
-- b) Pour pouvoir executer du code java il faut installer [JDK et JRE](https://www.openlogic.com/openjdk-downloads)
+- Pour pouvoir executer du code java il faut installer [JDK et JRE](https://www.openlogic.com/openjdk-downloads)
 
-- c) Ensuite vous devez 
+- Ensuite vous devez 
 Installer [MySQLWorkbenchCommunity](https://dev.mysql.com/downloads/file/?id=501136) et [MySQLWorkbench](https://dev.mysql.com/downloads/file/?id=500617) 
 
-- d) Enfin vous devez
+- Enfin vous devez
 Installer [Git](https://git-scm.com/downloads)
 
 
