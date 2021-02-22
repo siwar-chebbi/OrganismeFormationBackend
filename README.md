@@ -64,10 +64,10 @@ Veillez à bien avoir fermer toutes autres applications spring sur le port d'éc
 
 Le projet a été réalisé par : 
 
-- Siwar Chebbi
-- Jamal Ait Ali
-- Gauthier Seynave
-- Albert Pinot
+- Siwar Chebbi : [Profil linkedin](linkedin.com/in/siwar-chebbi-6923411bb)
+- Jamal Ait Ali : [Profil linkedin](linkedin.com/in/jamal-ait-ali-3b1002164)
+- Gauthier Seynave : [Profil linkedin](linkedin.com/in/gauthier-seynave-393928157)
+- Albert Pinot : [Profil linkedin](linkedin.com/in/albert-pinot-7603ba16b)
 
 Nous avons travaillé le plus agile possible, cela passe par l'utilisation d'outils tels que : 
 - [Trello](https://trello.com/b/djHUEcbo/projet-fil-rouge) pour la répartition des tâches. 
