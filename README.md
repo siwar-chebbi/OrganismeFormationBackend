@@ -64,7 +64,7 @@ Une fois le projet importé, on peut donc l'exectuer.
 
 Veillez à bien avoir fermer toutes autres applications spring sur le port d'écoute 8080, pour ne pas avoir de problème lors de l'execution de l'application.
 
-## Équipes
+## Équipe
 
 Le projet a été réalisé par : 
 
