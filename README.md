@@ -75,4 +75,4 @@ Le projet a été réalisé par :
 
 Nous avons travaillé le plus agile possible, cela passe par l'utilisation d'outils tels que : 
 - [Trello](https://trello.com/b/djHUEcbo/projet-fil-rouge) pour la répartition des tâches. 
-- [Git](https://github.com/siwar-chebbi/OrganismeFormationBackend.git) le repository de notre application back end.
+- [Git](https://github.com/siwar-chebbi/OrganismeFormationBackend.git) le repertoire de notre application back end sur github.
