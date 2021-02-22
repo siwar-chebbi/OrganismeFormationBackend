@@ -20,9 +20,13 @@ La partie suivante expliquera les prérequis pour la création du back-end de no
 -	Dépendance : Spring web, Lombok, mySQL driver ou mariaDB Driver, Spring data JPA.
 
 Spring tools suits : Environement de développement(permet d'executer du code JAVA).
+
 MySQL workbench : Gestionnaire de base de données mySQL.
+
 Git : Outils de versionning de code et gestion de fichier.
+
 Trello : Outis de gestion de projets.
+
 Spring : Framework développé sous JAVA.
 
 Nous allons donc procéder à la mise en place du projet, détaillé dans la partie ci-dessous.
