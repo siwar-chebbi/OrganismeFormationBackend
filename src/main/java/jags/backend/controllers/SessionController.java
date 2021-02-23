@@ -13,7 +13,7 @@ import jags.backend.entities.Session;
 import jags.backend.services.SessionService;
 
 @RestController
-@RequestMapping("sessioons")
+@RequestMapping("sessions")
 @CrossOrigin
 public class SessionController {
 
