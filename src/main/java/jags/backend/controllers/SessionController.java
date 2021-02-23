@@ -13,8 +13,8 @@ import jags.backend.entities.Session;
 import jags.backend.services.SessionService;
 
 @RestController
-@RequestMapping("sessions")
-@CrossOrigin
+@CrossOrigin(origins = {"http://localhost:4200"}, allowedHeaders={"Accept"})
+@RequestMapping("/sessions")
 public class SessionController {
 
 	@Autowired

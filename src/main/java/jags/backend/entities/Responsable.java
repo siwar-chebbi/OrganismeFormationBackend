@@ -1,6 +1,5 @@
 package jags.backend.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,7 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 @Entity 
+@Component
 @Table(name="Responsable")
 public class Responsable {
 	@Id
@@ -34,7 +36,7 @@ public class Responsable {
 	private String telephone;
 	
 	@OneToMany(mappedBy = "responsable")
-	private List<Formation> formations = new ArrayList<>();
+	private List<Formation> formations;
 
 	public Long getId() {
 		return id;
@@ -83,14 +85,4 @@ public class Responsable {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-
-	public List<Formation> getFormations() {
-		return formations;
-	}
-
-	public void setFormations(List<Formation> formations) {
-		this.formations = formations;
-	}
-
-
 }

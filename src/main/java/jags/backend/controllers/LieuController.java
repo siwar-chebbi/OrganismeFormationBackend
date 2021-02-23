@@ -36,6 +36,6 @@ public class LieuController {
 	
 	@GetMapping("/session/{sessionId}")
 	public List<Lieu> findLieuBySessionId(@PathVariable Long sessionId){
-		return this.service.findLieuBySessionId(sessionId);
+		return this.service.findLieuBySessionsId(sessionId);
 	}
 }

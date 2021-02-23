@@ -15,6 +15,6 @@ public interface LieuRepository extends JpaRepository<Lieu, Long>{
 	@Query("SELECT * FROM lieu AS l"
 			+ "INNER JOIN session AS s on l.id = s.lieu_id "
 			+ "WHERE s.id = ?1)")
-	List<Lieu> findLieuBySessionId(Long sessionId);
+	List<Lieu> findLieuBySessionsId(Long sessionId);
 
 }

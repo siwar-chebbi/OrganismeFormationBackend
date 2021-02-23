@@ -30,7 +30,7 @@ public class Lieu {
 	private Boolean disponibilite;
 
 	@OneToMany(mappedBy = "lieu")
-	private List<Session> session;
+	private List<Session> sessions;
 
 	public Boolean getDisponibilite() {
 		return disponibilite;

@@ -1,6 +1,5 @@
 package jags.backend.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -18,8 +17,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 
 @Entity 
+@Component
 @Table(name="Formation")
 public class Formation {
 	
@@ -57,7 +59,7 @@ public class Formation {
 	@JoinTable( name = "Contenir", 
 	joinColumns = @JoinColumn(name = "Formation_id"), 
 	inverseJoinColumns = @JoinColumn (name ="Theme_id"))
-	private List<Theme> themes = new ArrayList<>();
+	private List<Theme> themes;
 	
 	@OneToMany(mappedBy = "formation")
 	private List<Session> sessions;
@@ -110,28 +112,12 @@ public class Formation {
 		this.support = support;
 	}
 
-	public TestPrerequis getTestPrerequis() {
-		return testPrerequis;
-	}
-
 	public Responsable getResponsable() {
 		return responsable;
 	}
 
-	public void setTestPrerequis(TestPrerequis testPrerequis) {
-		this.testPrerequis = testPrerequis;
-	}
-
 	public void setResponsable(Responsable responsable) {
 		this.responsable = responsable;
-	}
-
-	public List<Enseigner> getExperience() {
-		return experience;
-	}
-
-	public void setExperience(List<Enseigner> experience) {
-		this.experience = experience;
 	}
 
 	public List<Theme> getThemes() {
@@ -141,14 +127,4 @@ public class Formation {
 	public void setThemes(List<Theme> themes) {
 		this.themes = themes;
 	}
-
-	public List<Session> getSessions() {
-		return sessions;
-	}
-
-	public void setSessions(List<Session> sessions) {
-		this.sessions = sessions;
-	}
-	
-
 }

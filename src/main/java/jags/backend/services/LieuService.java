@@ -40,7 +40,7 @@ public class LieuService {
 //		return this.repository.finbByDisponibilite(bool);
 //	}
 
-	public List<Lieu> findLieuBySessionId(Long sessionId) {
-		return this.repository.findLieuBySessionId(sessionId);
+	public List<Lieu> findLieuBySessionsId(Long sessionId) {
+		return this.repository.findLieuBySessionsId(sessionId);
 	}
 }
