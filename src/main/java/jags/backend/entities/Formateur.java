@@ -73,12 +73,11 @@ public class Formateur {
 	public void setBlame(Integer blame) {
 		this.blame = blame;
 	}
-	/*
 	public List<Enseigner> getExperience() {
 		return experience;
 	}
 	public void setExperience(List<Enseigner> experience) {
 		this.experience = experience;
-	}*/
+	}
 	
 }
