@@ -26,7 +26,7 @@ public class FormationService {
 		return repository.findByContenu(contenu);
 	}
 
-	public <S extends Formation> S save(S entity) {
+	public Formation save(Formation entity) {
 		return repository.save(entity);
 	}
 

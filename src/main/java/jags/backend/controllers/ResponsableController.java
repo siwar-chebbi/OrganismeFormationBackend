@@ -14,7 +14,7 @@ import jags.backend.entities.Responsable;
 import jags.backend.services.ResponsableService;
 
 @RestController
-@RequestMapping("responsable")
+@RequestMapping("responsables")
 @CrossOrigin
 public class ResponsableController {
 	
@@ -29,9 +29,9 @@ public class ResponsableController {
 		return service.findByPrenom(prenom);
 	}
 	
-	@GetMapping("email/{email}")
-	public List<Responsable> findByEmail(@PathVariable String email) {
-		return service.findByEmail(email);
+	@GetMapping("mail/{mail}")
+	public List<Responsable> findByMail(@PathVariable String mail) {
+		return service.findByMail(mail);
 	}
 	
 	@GetMapping
@@ -45,7 +45,7 @@ public class ResponsableController {
 	}
 	
 	@PostMapping
-	public <S extends Responsable> S save(@RequestBody S entity) {
+	public Responsable save(@RequestBody Responsable entity) {
 		return service.save(entity);
 	}
 	

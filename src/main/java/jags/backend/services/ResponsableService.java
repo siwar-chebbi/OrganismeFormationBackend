@@ -25,8 +25,8 @@ public class ResponsableService {
 		return repository.findByPrenom(prenom);
 	}
 
-	public List<Responsable> findByEmail(String email) {
-		return repository.findByEmail(email);
+	public List<Responsable> findByMail(String mail) {
+		return repository.findByMail(mail);
 	}
 
 	public List<Responsable> findAll() {
@@ -38,7 +38,7 @@ public class ResponsableService {
 				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 
-	public <S extends Responsable> S save(S entity) {
+	public Responsable save(Responsable entity) {
 		return repository.save(entity);
 	}
 	

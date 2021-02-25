@@ -35,7 +35,7 @@ public class FormationController {
 	}
 	
 	@PostMapping
-	public <S extends Formation> S save(@RequestBody S entity) {
+	public Formation save(@RequestBody Formation entity) {
 		return service.save(entity);
 	}
 	
