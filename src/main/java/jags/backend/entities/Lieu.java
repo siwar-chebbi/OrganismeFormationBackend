@@ -62,5 +62,5 @@ public class Lieu {
 
 	public void setSalle(String salle) {
 		this.salle = salle;
-	}	
+	}
 }

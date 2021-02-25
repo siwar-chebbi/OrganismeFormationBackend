@@ -2,6 +2,7 @@ package jags.backend.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -61,7 +62,7 @@ public class Formation {
 	inverseJoinColumns = @JoinColumn (name ="Theme_id"))
 	private List<Theme> themes;
 	
-	@OneToMany(mappedBy = "formation")
+	@OneToMany(mappedBy = "formation", cascade = CascadeType.ALL)
 	private List<Session> sessions;
 
 	public Long getId() {

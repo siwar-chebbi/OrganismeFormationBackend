@@ -21,21 +21,21 @@ public class FormationService {
 	public List<Formation> findAll() {
 		return repository.findAll();
 	}
-//
-//	public List<Formation> findByTitre(String titre) {
-//		return repository.findByTitre(titre);
-//	}
-//	
-//	public List<Formation> findByContenu(String contenu) {
-//		return repository.findByContenu(contenu);
-//	}
-//
-//	public <S extends Formation> S save(S entity) {
-//		return repository.save(entity);
-//	}
-//	
-//	public Formation findById(Long id) {
-//		return repository.findById(id)
-//				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//	}
+
+	public List<Formation> findByTitre(String titre) {
+		return repository.findByTitre(titre);
+	}
+	
+	public List<Formation> findByContenu(String contenu) {
+		return repository.findByContenu(contenu);
+	}
+
+	public <S extends Formation> S save(S entity) {
+		return repository.save(entity);
+	}
+	
+	public Formation findById(Long id) {
+		return repository.findById(id)
+				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+	}
 }

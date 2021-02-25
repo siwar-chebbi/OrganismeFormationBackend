@@ -46,7 +46,7 @@ public class Session {
 	
 	@Column(name="Validation")
 	private Integer validation;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DateDebut")
 	private Date dateDebut;
@@ -56,12 +56,12 @@ public class Session {
 	private Date dateFin;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("id")
+//    @MapsId("id")
 	@JoinColumn(name="Formation_id")
     private Formation formation;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("id")
+//    @MapsId("id")
 	@JoinColumn(name="Lieu_id")
     private Lieu lieu;
 
@@ -155,5 +155,13 @@ public class Session {
 	public void setLieu(Lieu lieu) {
 		this.lieu = lieu;
 	}
-	
+
+	public List<BilanParticipantSession> getBilanParticipantSessions() {
+		return bilanParticipantSessions;
+	}
+
+	public void setBilanParticipantSessions(List<BilanParticipantSession> bilanParticipantSessions) {
+		this.bilanParticipantSessions = bilanParticipantSessions;
+	}
+
 }
