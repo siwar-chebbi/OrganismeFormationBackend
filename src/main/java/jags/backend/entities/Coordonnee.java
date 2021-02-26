@@ -123,4 +123,13 @@ public class Coordonnee {
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
+
+	public Participant getParticipant() {
+		return participant;
+	}
+
+	public void setParticipant(Participant participant) {
+		this.participant = participant;
+	}
+	
 }

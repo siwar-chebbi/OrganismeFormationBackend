@@ -111,4 +111,13 @@ public class Participant {
 	public void setCoordonnee(Coordonnee coordonnee) {
 		this.coordonnee = coordonnee;
 	}
+
+	public List<BilanParticipantSession> getBilanParticipantSessions() {
+		return bilanParticipantSessions;
+	}
+
+	public void setBilanParticipantSessions(List<BilanParticipantSession> bilanParticipantSessions) {
+		this.bilanParticipantSessions = bilanParticipantSessions;
+	}
+	
 }

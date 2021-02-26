@@ -128,4 +128,29 @@ public class Formation {
 	public void setThemes(List<Theme> themes) {
 		this.themes = themes;
 	}
+
+	public TestPrerequis getTestPrerequis() {
+		return testPrerequis;
+	}
+
+	public void setTestPrerequis(TestPrerequis testPrerequis) {
+		this.testPrerequis = testPrerequis;
+	}
+
+	public List<Enseigner> getExperience() {
+		return experience;
+	}
+
+	public void setExperience(List<Enseigner> experience) {
+		this.experience = experience;
+	}
+
+	public List<Session> getSessions() {
+		return sessions;
+	}
+
+	public void setSessions(List<Session> sessions) {
+		this.sessions = sessions;
+	}
+	
 }

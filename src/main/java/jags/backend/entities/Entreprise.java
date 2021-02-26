@@ -61,4 +61,21 @@ public class Entreprise {
 	public void setSiret(String siret) {
 		this.siret = siret;
 	}
+
+	public Coordonnee getCoordonnee() {
+		return coordonnee;
+	}
+
+	public void setCoordonnee(Coordonnee coordonnee) {
+		this.coordonnee = coordonnee;
+	}
+
+	public List<Participant> getParticipant() {
+		return participant;
+	}
+
+	public void setParticipant(List<Participant> participant) {
+		this.participant = participant;
+	}
+	
 }
