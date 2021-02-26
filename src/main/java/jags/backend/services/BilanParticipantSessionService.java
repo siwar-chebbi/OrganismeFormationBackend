@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jags.backend.DTO.InscriptionParticipantEmploye;
+import jags.backend.DTO.InscriptionParticipantParticulier;
 import jags.backend.entities.BilanParticipantSession;
 import jags.backend.entities.Coordonnee;
 import jags.backend.entities.Entreprise;
@@ -52,13 +55,29 @@ public class BilanParticipantSessionService {
 	}
 	
 	/**
+	 * Alimentation de l'objet coordonnee provenant du DTO InscriptionParticipantParticulier
+	 * @param particulier Donnée reçu du front end (formulaire inscription session particulier)
+	 */
+	public void alimentationCoordonnee(InscriptionParticipantParticulier particulier) {
+		this.coordonnee.setCodePostal(particulier.getCoordonnee().getCodePostal());
+		this.coordonnee.setMail(particulier.getCoordonnee().getMail());
+		this.coordonnee.setNumeroVoie(particulier.getCoordonnee().getNumeroVoie());
+		this.coordonnee.setPays(particulier.getCoordonnee().getPays());
+		this.coordonnee.setTelephone(particulier.getCoordonnee().getTelephone());
+		this.coordonnee.setTypeVoie(particulier.getCoordonnee().getTypeVoie());
+		this.coordonnee.setVille(particulier.getCoordonnee().getVille());
+	}
+	
+	/**
 	 * Inscription d'un participant particulier, ne possedant pas d'entreprise, a une session 
 	 * @param participantId : id du participant, requis pour l'insertion dans la table bilan
 	 * @param sessionId : id de la session, requis pour l'insertion dans la table bilan
 	 * @param coordonnee : les coordonnes du particpant a ajouter ou mettre a jour dans la base de donnees
 	 */
-	public void inscriptionSessionParticulier(Long participantId, Long sessionId, Coordonnee coordonnee) {
-		traitementBilanEtCoordonneeParticipant(participantId, sessionId, coordonnee);
+	public void inscriptionSessionParticulier(InscriptionParticipantParticulier particulier) {
+		
+		alimentationCoordonnee(particulier);
+		traitementBilanEtCoordonneeParticipant(particulier.getIdParticipant(), particulier.getIdSession(), coordonnee);
 		this.lieuService.save(session.getLieu());
 		this.participantService.save(participant);
 	}
@@ -71,14 +90,28 @@ public class BilanParticipantSessionService {
 	public void traitementBilanEtCoordonneeParticipant(Long participantId, Long sessionId, Coordonnee coordonnee) {
 		recuperationSessionEtParticipantParId(participantId, sessionId);
 		alimentationBilanParticipantEtSession();
-		creationBilan();
-		sauvegardeCoordonneeParticipant(coordonnee);
+		
+		// récuperer participant_id, session_id
+		if (!findByParticipantIdAndSessionId(participantId,sessionId)) {
+			creationBilan();
+			sauvegardeCoordonneeParticipant(coordonnee);
+		}
+		
+	}
+	
+	public Boolean findByParticipantIdAndSessionId(Long participantId, Long sessionId) {
+		 
+		if (this.repository.findByParticipantIdAndSessionId(participantId, sessionId) == null) {
+			return false; 
+		}
+		return true;
 	}
 	
 	/**
 	 * Alimentation du bilan avec le participant (id) et la session (id et numero de session)
 	 */
 	public void alimentationBilanParticipantEtSession() {
+		bilan.setId(null);
 		bilan.setParticipant(participant);
 		bilan.setSession(session);
 		bilan.setNumeroSessionEval(session.getNumero());
@@ -164,9 +197,9 @@ public class BilanParticipantSessionService {
 	 * @param bilanParticipantSession objet contenant les valeurs de l'evalaution du participant 
 	 */
 	public void evaluationSession(BilanParticipantSession bilanParticipantSession) {
-		bilan = this.repository.findByParticipantIdAndSessionId(bilanParticipantSession.getParticipant().getId(), bilanParticipantSession.getSession().getId());
-		bilanParticipantSession.setId(bilan.getId());
-		this.repository.save(bilanParticipantSession);
+//		bilan = this.repository.findByParticipantIdAndSessionId(bilanParticipantSession.getParticipant().getId(), bilanParticipantSession.getSession().getId());
+//		bilanParticipantSession.setId(bilan.getId());
+//		this.repository.save(bilanParticipantSession);
 	}
 	
 	/**

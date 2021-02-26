@@ -41,9 +41,7 @@ public class CoordonneeService {
 	 */
 	public void coordoonneeIdSiExiste(Coordonnee coordonnee) {
 		if(this.repository.existsCoordonneeByMail(coordonnee.getMail())) {
-			System.out.println(" dans if exist, avant find id");
 			Long id = findIdByMail(coordonnee.getMail());
-			System.out.println(" avant set id");
 			coordonnee.setId(id);
 		}
 	}

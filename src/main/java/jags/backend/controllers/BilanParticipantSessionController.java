@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jags.backend.DTO.InscriptionParticipantParticulier;
 import jags.backend.entities.BilanParticipantSession;
 import jags.backend.entities.Coordonnee;
 import jags.backend.services.BilanParticipantSessionService;
@@ -30,9 +31,9 @@ public class BilanParticipantSessionController {
 		return this.service.findAll();
 	}
 	
-	@PostMapping("/inscriptionSessionParticulier/{participantId}/{sessionId}")
-	public void inscriptionSessionParticulier(@PathVariable Long participantId, @PathVariable Long sessionId, @RequestBody Coordonnee coordonnee) {
-		this.service.inscriptionSessionParticulier(participantId, sessionId, coordonnee);
+	@PostMapping("/inscriptionSessionParticulier")
+	public void inscriptionSessionParticulier(@RequestBody InscriptionParticipantParticulier particulier) {
+		this.service.inscriptionSessionParticulier(particulier);
 	}
 	
 	@PostMapping("/inscriptionSessionEntreprise/{participantId}/{sessionId}")
