@@ -30,8 +30,8 @@ public class ResponsableController {
 	}
 	
 	@GetMapping("email/{email}")
-	public List<Responsable> findByEmail(@PathVariable String email) {
-		return service.findByEmail(email);
+	public List<Responsable> findByMail(@PathVariable String email) {
+		return service.findByMail(email);
 	}
 	
 	@GetMapping

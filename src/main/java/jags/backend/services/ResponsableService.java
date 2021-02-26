@@ -25,8 +25,8 @@ public class ResponsableService {
 		return repository.findByPrenom(prenom);
 	}
 
-	public List<Responsable> findByEmail(String email) {
-		return repository.findByEmail(email);
+	public List<Responsable> findByMail(String email) {
+		return repository.findByMail(email);
 	}
 
 	public List<Responsable> findAll() {

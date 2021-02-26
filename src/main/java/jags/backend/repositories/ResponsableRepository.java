@@ -10,6 +10,6 @@ import jags.backend.entities.Responsable;
 public interface ResponsableRepository extends JpaRepository<Responsable, Long>{
 	public List<Responsable> findByNom(String nom);
 	public List<Responsable> findByPrenom(String prenom);
-	public List<Responsable> findByEmail(String email);
+	public List<Responsable> findByMail(String mail);
 	
 }
