@@ -28,19 +28,38 @@ public class ParticipantService {
 	@Autowired
 	private Entreprise entreprise;
 
+	/**
+	 * Récupère tout les participants contenu dans la bdd
+	 * @return la liste de tout les participants
+	 */
 	public List<Participant> findAll() {
 		return this.repository.findAll();
 	}
 
-	public Participant save(Participant entity) {
-		return this.repository.save(entity);
+	/**
+	 * Ajoute un participant en base de donnée 
+	 * @param participant participant que l'on veut ajouter
+	 * @return le participant ajoutée
+	 */
+	public Participant save(Participant participant) {
+		return this.repository.save(participant);
 	}
 
+	/**
+	 * Récupération d'un participant par son id
+	 * @param participantId Ide du participant que l'on recherche
+	 * @return le participant qui correspond à l'id recherché
+	 */
 	public Participant findById(Long participantId) {
 		return this.repository.findById(participantId)
 							.orElseThrow(() ->  new ResponseStatusException (HttpStatus.NOT_FOUND));
 	}
-
+	
+	/**
+	 * Permet de récupérer les participants d'une entreprise par l'ID de l'entreprise
+	 * @param entrepriseId un entier (Long) corespondant à l'ID de l'entreprise 
+	 * @return Une liste de Participant qui appartiennent à l'entreprise dont l'id = entreprise id
+	 */
 	public List<Participant> findByEntreprise(Long entrepriseId) {
 		entreprise = this.entrepriseService.findById(entrepriseId);
 		return this.repository.findByEntreprise(entreprise);

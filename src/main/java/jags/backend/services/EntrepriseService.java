@@ -78,6 +78,11 @@ public class EntrepriseService {
 		return entreprise.getId();
 	}
 
+	/**
+	 * Récupération d'une entreprise à partir de son id
+	 * @param entrepriseId Id de l'entreprise que l'on recherche
+	 * @return l'entreprise qui correspond à l'id par lequel on recherche
+	 */
 	public Entreprise findById(Long entrepriseId) {
 		return this.repository.findById(entrepriseId)
 							.orElseThrow(() ->  new ResponseStatusException (HttpStatus.NOT_FOUND));
