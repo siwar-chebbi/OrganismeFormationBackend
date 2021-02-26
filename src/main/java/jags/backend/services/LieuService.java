@@ -16,13 +16,11 @@ public class LieuService {
 	@Autowired
 	private LieuRepository repository;
 	
-	@GetMapping("")
 	public List<Lieu> findAll(){
 		return this.repository.findAll();
 	}
 
-	@GetMapping("{id}")
-	public Lieu findById(@PathVariable Long id){
+	public Lieu findById(Long id){
 		return this.repository.findById(id)
 				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
