@@ -23,31 +23,31 @@ public class FormationController {
 	@Autowired
 	private FormationService service;
 	
+	
+	@GetMapping("titre/{titre}")
+	public List<Formation> findByTitre(@PathVariable String titre) {
+		return service.findByTitre(titre);
+	}
+	
+	@GetMapping("contenu/{contenu}")
+	public List<Formation> findByContenu(@PathVariable String contenu) {
+		return service.findByContenu(contenu);
+	}
+	
+	@PostMapping
+	public Formation save(@RequestBody Formation entity) {
+		return service.save(entity);
+	}
+	
 	@GetMapping
 	public List<Formation> findAll() {
 		return service.findAll();
 	}
 	
-//	@GetMapping("titre/{titre}")
-//	public List<Formation> findByTitre(@PathVariable String titre) {
-//		return service.findByTitre(titre);
-//	}
-//	
-//	@GetMapping("contenu/{contenu}")
-//	public List<Formation> findByContenu(@PathVariable String contenu) {
-//		return service.findByContenu(contenu);
-//	}
-//	
-//	@PostMapping
-//	public <S extends Formation> S save(@RequestBody S entity) {
-//		return service.save(entity);
-//	}
-//	
-//	
-//	@GetMapping("{id}")
-//	public Formation findById(@PathVariable Long id) {
-//		return service.findById(id);
-//	}
+	@GetMapping("{id}")
+	public Formation findById(@PathVariable Long id) {
+		return service.findById(id);
+	}
 
 
 

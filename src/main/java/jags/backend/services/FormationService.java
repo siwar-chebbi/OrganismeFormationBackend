@@ -17,11 +17,6 @@ public class FormationService {
 	@Autowired
 	private FormationRepository repository;
 	
-	
-	public List<Formation> findAll() {
-		return repository.findAll();
-	}
-
 	public List<Formation> findByTitre(String titre) {
 		return repository.findByTitre(titre);
 	}
@@ -30,8 +25,12 @@ public class FormationService {
 		return repository.findByContenu(contenu);
 	}
 
-	public <S extends Formation> S save(S entity) {
+	public Formation save(Formation entity) {
 		return repository.save(entity);
+	}
+
+	public List<Formation> findAll() {
+		return repository.findAll();
 	}
 	
 	public Formation findById(Long id) {

@@ -27,7 +27,7 @@ public class TestPrerequisController {
 		return service.findByNumero(numero);
 	}
 	
-	@GetMapping
+	@GetMapping("")
 	public List<TestPrerequis> findAll() {
 		return service.findAll();
 	}
@@ -38,7 +38,7 @@ public class TestPrerequisController {
 	}
 	
 	@PostMapping
-	public <S extends TestPrerequis> S save(@RequestBody S entity) {
+	public TestPrerequis save(@RequestBody TestPrerequis entity) {
 		return service.save(entity);
 	}
 	

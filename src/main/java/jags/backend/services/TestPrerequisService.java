@@ -32,10 +32,8 @@ public class TestPrerequisService {
 				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 
-	public <S extends TestPrerequis> S save(S entity) {
+	public TestPrerequis save(TestPrerequis entity) {
 		return repository.save(entity);
 	}
 	
-	
-
 }
