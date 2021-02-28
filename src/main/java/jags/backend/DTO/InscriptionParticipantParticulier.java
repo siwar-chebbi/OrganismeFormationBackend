@@ -24,5 +24,12 @@ public class InscriptionParticipantParticulier {
 	public void setCoordonnee(CoordonneeDTO coordonnee) {
 		this.coordonnee = coordonnee;
 	}
+	@Override
+	public String toString() {
+		return "InscriptionParticipantParticulier [idParticipant=" + idParticipant + ", idSession=" + idSession
+				+ ", coordonnee=" + coordonnee.toString() + "]";
+	}
+	
+	
 	
 }

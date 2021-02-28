@@ -52,5 +52,11 @@ public class CoordonneeDTO {
 	public void setVille(String ville) {
 		this.ville = ville;
 	}
+	@Override
+	public String toString() {
+		return "CoordonneeDTO [codePostal=" + codePostal + ", mail=" + mail + ", numeroVoie=" + numeroVoie + ", pays="
+				+ pays + ", telephone=" + telephone + ", typeVoie=" + typeVoie + ", ville=" + ville + "]";
+	}
+	
 	
 }
