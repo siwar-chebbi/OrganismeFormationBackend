@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jags.backend.DTO.CoordonneeDTO;
 import jags.backend.DTO.InscriptionParticipantEmploye;
 import jags.backend.DTO.InscriptionParticipantParticulier;
 import jags.backend.entities.BilanParticipantSession;
@@ -55,17 +56,19 @@ public class BilanParticipantSessionService {
 	}
 	
 	/**
-	 * Alimentation de l'objet coordonnee provenant du DTO InscriptionParticipantParticulier
-	 * @param particulier Donnée reçu du front end (formulaire inscription session particulier)
+	 * Alimentation de l'objet coordonnee provenant de coordonneeDTO
+	 * @param coordonneeDTO Donnée reçu du front end (formulaire inscription session particulier)
 	 */
-	public void alimentationCoordonnee(InscriptionParticipantParticulier particulier) {
-		this.coordonnee.setCodePostal(particulier.getCoordonnee().getCodePostal());
-		this.coordonnee.setMail(particulier.getCoordonnee().getMail());
-		this.coordonnee.setNumeroVoie(particulier.getCoordonnee().getNumeroVoie());
-		this.coordonnee.setPays(particulier.getCoordonnee().getPays());
-		this.coordonnee.setTelephone(particulier.getCoordonnee().getTelephone());
-		this.coordonnee.setTypeVoie(particulier.getCoordonnee().getTypeVoie());
-		this.coordonnee.setVille(particulier.getCoordonnee().getVille());
+	public void coordonneeDtoToCoordonnee(CoordonneeDTO coordonneeDTO) {
+		
+		this.coordonnee = new Coordonnee();
+		this.coordonnee.setCodePostal(coordonneeDTO.getCodePostal());
+		this.coordonnee.setMail(coordonneeDTO.getMail());
+		this.coordonnee.setNumeroVoie(coordonneeDTO.getNumeroVoie());
+		this.coordonnee.setPays(coordonneeDTO.getPays());
+		this.coordonnee.setTelephone(coordonneeDTO.getTelephone());
+		this.coordonnee.setTypeVoie(coordonneeDTO.getTypeVoie());
+		this.coordonnee.setVille(coordonneeDTO.getVille());
 	}
 	
 	/**
@@ -76,7 +79,7 @@ public class BilanParticipantSessionService {
 	 */
 	public void inscriptionSessionParticulier(InscriptionParticipantParticulier particulier) {
 		
-		alimentationCoordonnee(particulier);
+		coordonneeDtoToCoordonnee(particulier.getCoordonneeParticipant());
 		traitementBilanEtCoordonneeParticipant(particulier.getIdParticipant(), particulier.getIdSession(), coordonnee);
 		this.lieuService.save(session.getLieu());
 		this.participantService.save(participant);
@@ -91,7 +94,8 @@ public class BilanParticipantSessionService {
 		recuperationSessionEtParticipantParId(participantId, sessionId);
 		alimentationBilanParticipantEtSession();
 		
-		// récuperer participant_id, session_id
+		// Si l'objet bilan n'existe pas alors le crée
+		// (aussi dis permet de vérifier que le participant n'est pas déjà inscrit à une session)
 		if (!findByParticipantIdAndSessionId(participantId,sessionId)) {
 			creationBilan();
 			sauvegardeCoordonneeParticipant(coordonnee);
@@ -124,21 +128,22 @@ public class BilanParticipantSessionService {
 	 * @param bodyRequest String contenant les coordonnes du participant, de l'entreprise
 	 *  et les informations de l'entreprise
 	 */
-	public void inscriptionSessionEntreprise(Long participantId, Long sessionId, String bodyRequest) {
-		splitBody(bodyRequest);
-		getCoordonneeParticipant(bodyRequestSplit);
-		traitementBilanEtCoordonneeParticipant(participantId, sessionId, coordonnee);
-		sauvegardeEntrepriseParticipant();
+	public void inscriptionSessionEntreprise(InscriptionParticipantEmploye employe) {
+		coordonneeDtoToCoordonnee(employe.getCoordonneeParticipant());
+		traitementBilanEtCoordonneeParticipant(employe.getIdParticipant(), employe.getIdSession(), coordonnee);
+		coordonneeDtoToCoordonnee(employe.getCoordonneeEntreprise());
+		sauvegardeEntrepriseParticipant(employe.getEntreprise());
 		this.lieuService.save(session.getLieu());
 		this.participantService.save(participant);
 	}
 	
 	/**
 	 * Sauvegarde d'une entreprise en base de donnees et recuperation de son Id
+	 * @param nouvelleEntreprise 
 	 */
-	public void sauvegardeEntrepriseParticipant() {
-		updateEntreprise();
-		participant.setEntreprise(entreprise);
+	public void sauvegardeEntrepriseParticipant(Entreprise nouvelleEntreprise) {
+		updateEntreprise(nouvelleEntreprise);
+		participant.setEntreprise(this.entreprise);
 		sauvegardeCoordonneeEntreprise();
 	}
 	
@@ -177,17 +182,17 @@ public class BilanParticipantSessionService {
 	 * Sauvegarde des coordonnees de l'entreprise en base de donnees 
 	 */
 	public void sauvegardeCoordonneeEntreprise() {
-		getCoordonneeEntreprise(bodyRequestSplit);
-		coordonnee.setEntreprise(entreprise);
-		this.coordonneeService.save(coordonnee);
+		this.coordonnee.setEntreprise(this.entreprise);
+		this.coordonneeService.save(this.coordonnee);
 	}
 	
 	/**
 	 * Creation / mise a jours des informations de l'entreprise en base de donnees et recuperation de son ID
+	 * @param nouvelleEntreprise 
 	 */
-	public void updateEntreprise() {
-		recupererDetailsEntreprise(bodyRequestSplit);
-		this.entrepriseService.save(entreprise);
+	public void updateEntreprise(Entreprise nouvelleEntreprise) {
+		recupererDetailsEntreprise(nouvelleEntreprise);
+		this.entrepriseService.save(this.entreprise);
 		Long id = this.entrepriseService.findIdBySiret(entreprise.getSiret());
 		entreprise.setId(id);
 	}
@@ -203,56 +208,12 @@ public class BilanParticipantSessionService {
 	}
 	
 	/**
-	 * Methode permettant de découper le string contenant les coordonnee du participant et de l'entreprise
-	 *  ainsi que les details de l'entreprise en element separes
-	 * @param bodyRequest String contenant les coordonnes du participant, de l'entreprise
-	 *  et les informations de l'entreprise
-	 */
-	public List<String> splitBody(String bodyRequest) {
-		String parts[] = bodyRequest.split(";");
-		for (int i = 0; i < parts.length; i++) {
-			bodyRequestSplit.add(i, parts[i]);
-		}
-		return bodyRequestSplit;
-	}
-	
-	/**
-	 * Recuperation des coordonnees d'un participant à partir des informations provenant du bodyRequest
-	 * @param bodyRequestSplit Liste contenant les elements lies aux coordonnees et details de l'entreprise
-	 */
-	public void getCoordonneeParticipant(List<String> bodyRequestSplit) {
-		coordonnee = new Coordonnee();
-		coordonnee.setCodePostal(bodyRequestSplit.get(9));
-		coordonnee.setMail(bodyRequestSplit.get(10));
-		coordonnee.setPays(bodyRequestSplit.get(11));
-		coordonnee.setNumeroVoie(bodyRequestSplit.get(12));
-		coordonnee.setTelephone(bodyRequestSplit.get(13));
-		coordonnee.setTypeVoie(bodyRequestSplit.get(14));
-		coordonnee.setVille(bodyRequestSplit.get(15));
-	}
-	
-	/**
-	 * Recuperation des coordonnees d'une entreprise à partir des informations provenant du bodyRequest
-	 * @param bodyRequestSplit Liste contenant les elements lies aux coordonnees et details de l'entreprise
-	 */
-	public void getCoordonneeEntreprise(List<String> bodyRequestSplit) {
-		coordonnee = new Coordonnee();
-		coordonnee.setCodePostal(bodyRequestSplit.get(0));
-		coordonnee.setMail(bodyRequestSplit.get(1));
-		coordonnee.setPays(bodyRequestSplit.get(2));
-		coordonnee.setNumeroVoie(bodyRequestSplit.get(3));
-		coordonnee.setTelephone(bodyRequestSplit.get(4));
-		coordonnee.setTypeVoie(bodyRequestSplit.get(5));
-		coordonnee.setVille(bodyRequestSplit.get(6));
-	}
-	
-	/**
 	 * Recuperation des details d'une entreprise à partir des informations provenant du bodyRequest
 	 * @param bodyRequestSplit Liste contenant les elements lies aux coordonnees et details de l'entreprise
 	 */
-	public void recupererDetailsEntreprise(List<String> bodyRequestSplit) {
-		entreprise.setSiret(bodyRequestSplit.get(7));
-		entreprise.setNom(bodyRequestSplit.get(8));
+	public void recupererDetailsEntreprise(Entreprise nouvelleEntreprise) {
+		this.entreprise.setSiret(nouvelleEntreprise.getSiret());
+		this.entreprise.setNom(nouvelleEntreprise.getNom());
 		
 	}
 	

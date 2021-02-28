@@ -4,7 +4,7 @@ public class InscriptionParticipantParticulier {
 	
 	private Long idParticipant;
 	private Long idSession;
-	private CoordonneeDTO coordonnee;
+	private CoordonneeDTO coordonneeParticipant;
 	
 	public Long getIdParticipant() {
 		return idParticipant;
@@ -18,11 +18,10 @@ public class InscriptionParticipantParticulier {
 	public void setIdSession(Long idSession) {
 		this.idSession = idSession;
 	}
-	public CoordonneeDTO getCoordonnee() {
-		return coordonnee;
+	public CoordonneeDTO getCoordonneeParticipant() {
+		return coordonneeParticipant;
 	}
-	public void setCoordonnee(CoordonneeDTO coordonnee) {
-		this.coordonnee = coordonnee;
+	public void setCoordonneeParticipant(CoordonneeDTO coordonneeParticipant) {
+		this.coordonneeParticipant = coordonneeParticipant;
 	}
-	
 }

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jags.backend.DTO.InscriptionParticipantEmploye;
 import jags.backend.DTO.InscriptionParticipantParticulier;
 import jags.backend.entities.BilanParticipantSession;
-import jags.backend.entities.Coordonnee;
 import jags.backend.services.BilanParticipantSessionService;
 
 @RestController
@@ -36,11 +36,11 @@ public class BilanParticipantSessionController {
 		this.service.inscriptionSessionParticulier(particulier);
 	}
 	
-	@PostMapping("/inscriptionSessionEntreprise/{participantId}/{sessionId}")
-	public void inscriptionSession(@PathVariable Long participantId, @PathVariable Long sessionId, @RequestBody String bodyRequest) {
-		this.service.inscriptionSessionEntreprise(participantId, sessionId, bodyRequest);
+	@PostMapping("/inscriptionSessionEntreprise")
+	public void inscriptionSession(@RequestBody InscriptionParticipantEmploye employe) {
+		this.service.inscriptionSessionEntreprise(employe);
 	}
-	
+
 	@PutMapping("/evaluations")
 	public void evaluationSession(@RequestBody BilanParticipantSession bilanParticipantSession) {
 		this.service.evaluationSession(bilanParticipantSession);
@@ -50,6 +50,4 @@ public class BilanParticipantSessionController {
 	public void deleteByParticipantIdAndSessionId(@PathVariable Long participantId, Long sessionId) {
 		this.service.deleteByParticipantIdAndSessionId(participantId, sessionId);
 	}
-	
-	
 }
