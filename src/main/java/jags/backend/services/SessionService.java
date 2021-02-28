@@ -59,11 +59,13 @@ public class SessionService {
 	 */
 	public SessionDTO sessionToSessionDTO(Session session) {
 		SessionDTO sessionDTO = new SessionDTO();
+		sessionDTO.setId(session.getId());
 		sessionDTO.setNumero(session.getNumero());
 		sessionDTO.setType(session.getType());
 		sessionDTO.setPrixHT(session.getPrixHT());
 		sessionDTO.setDuree(session.getDuree());
 		sessionDTO.setDateDebut(session.getDateDebut());
+		determinerDatedeFinSession(sessionDTO.getDuree());
 		sessionDTO.setIdFormation(session.getFormation().getId());
 		sessionDTO.setIdLieu(session.getLieu().getId());
 		return sessionDTO;
@@ -77,6 +79,10 @@ public class SessionService {
 	public Session findById(Long id) {
 		return this.repository.findById(id)
 				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+	}
+	
+	public SessionDTO findByIdSessionDTO(Long id) {
+		return sessionToSessionDTO(findById(id));
 	}
 
 	/**
@@ -151,5 +157,19 @@ public class SessionService {
 	 */
 	public Lieu recupererLieuById(Long id){
 		return this.lieuService.findById(id);
+	}
+
+	public List<SessionDTO> findAllByFormationId(Long id) {
+		List<Session> sessions = this.repository.findAllByFormationId(id);
+		return listSessionsToListSessionsDTO(sessions);
+	}
+	
+	public List<SessionDTO> listSessionsToListSessionsDTO(List<Session> sessions){
+		List<SessionDTO> sessionsDTO = new ArrayList<SessionDTO>();
+		for (Session session : sessions) {
+			sessionsDTO.add(sessionToSessionDTO(session));
+		}
+		return sessionsDTO;
+		
 	}
 }

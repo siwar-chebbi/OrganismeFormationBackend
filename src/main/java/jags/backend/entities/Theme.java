@@ -78,6 +78,11 @@ public class Theme {
 	public void setThemes(List<Theme> themes) {
 		this.themes = themes;
 	}
+	@Override
+	public String toString() {
+		return "Theme [id=" + id + ", Numero=" + Numero + ", Nom=" + Nom + ", domaine=" + domaine + ", themeParent="
+				+ themeParent + ", themes=" + themes + "]";
+	}
 	
 	
 	

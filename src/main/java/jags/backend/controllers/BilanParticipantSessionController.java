@@ -33,7 +33,6 @@ public class BilanParticipantSessionController {
 	
 	@PostMapping("/inscriptionSessionParticulier")
 	public void inscriptionSessionParticulier(@RequestBody InscriptionParticipantParticulier particulier) {
-		System.out.println(particulier.toString());
 		this.service.inscriptionSessionParticulier(particulier);
 	}
 	

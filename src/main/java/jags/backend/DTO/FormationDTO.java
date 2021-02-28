@@ -1,17 +1,26 @@
 package jags.backend.DTO;
 
+import java.util.List;
 
 public class FormationDTO {
 	
+	private Long id;
 	private String contenu;
 	private String logiciel;
 	private Integer numero;
 	private String support;
 	private String titre;
 	private Long idResponsable;
-	private Long idTheme;
+	private List<Long> idTheme;
 	
 	// Getters & Setters
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getContenu() {
 		return contenu;
 	}
@@ -48,15 +57,11 @@ public class FormationDTO {
 	public void setIdResponsable(Long idResponsable) {
 		this.idResponsable = idResponsable;
 	}
-	public Long getIdTheme() {
+	public List<Long> getIdTheme() {
 		return idTheme;
 	}
-	public void setIdTheme(Long idTheme) {
+	public void setIdTheme(List<Long> idTheme) {
 		this.idTheme = idTheme;
 	}
-	@Override
-	public String toString() {
-		return "FormationDTO [contenu=" + contenu + ", logiciel=" + logiciel + ", numero=" + numero + ", support="
-				+ support + ", titre=" + titre + ", IdResponsable=" + idResponsable + ", IdTheme=" + idTheme + "]";
-	}
+	
 }

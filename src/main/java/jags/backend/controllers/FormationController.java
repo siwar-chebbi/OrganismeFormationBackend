@@ -33,6 +33,11 @@ public class FormationController {
 		return service.findDTOById(id);
 	}
 	
+	@GetMapping("/themes/{id}")
+	public List<FormationDTO> findFormationByThemeId(@PathVariable Long id) {
+		return service.findFormationByThemeId(id);
+	}
+	
 	@PostMapping("")
 	public FormationDTO save(@RequestBody FormationDTO entity) {
 		return service.save(entity);

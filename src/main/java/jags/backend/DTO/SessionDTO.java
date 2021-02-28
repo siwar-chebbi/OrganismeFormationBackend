@@ -3,7 +3,7 @@ package jags.backend.DTO;
 import java.util.Date;
 
 public class SessionDTO {
-
+	private Long id;
 	private String numero;
 	private Integer type;
 	private Double prixHT;
@@ -12,6 +12,12 @@ public class SessionDTO {
 	private Long idFormation;
 	private Long idLieu;
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getNumero() {
 		return numero;
 	}

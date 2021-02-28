@@ -131,5 +131,6 @@ public class Formation {
 	}
 	public void setSessions(List<Session> sessions) {
 		this.sessions = sessions;
-	}	
+	}
+	
 }
