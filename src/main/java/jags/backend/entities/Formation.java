@@ -49,7 +49,7 @@ public class Formation {
     private TestPrerequis testPrerequis;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("id")
+    //@MapsId("id")
 	@JoinColumn(name = "Responsable_id")
 	private Responsable responsable;
 	
@@ -65,92 +65,71 @@ public class Formation {
 	@OneToMany(mappedBy = "formation", cascade = CascadeType.ALL)
 	private List<Session> sessions;
 
+	// Getters et Setters
 	public Long getId() {
 		return id;
 	}
-
 	public Integer getNumero() {
 		return numero;
 	}
-
 	public String getTitre() {
 		return titre;
 	}
-
 	public String getContenu() {
 		return contenu;
 	}
-
 	public String getLogiciel() {
 		return logiciel;
 	}
-
 	public String getSupport() {
 		return support;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
-
 	public void setTitre(String titre) {
 		this.titre = titre;
 	}
-
 	public void setContenu(String contenu) {
 		this.contenu = contenu;
 	}
-
 	public void setLogiciel(String logiciel) {
 		this.logiciel = logiciel;
 	}
-
 	public void setSupport(String support) {
 		this.support = support;
 	}
-
 	public Responsable getResponsable() {
 		return responsable;
 	}
-
 	public void setResponsable(Responsable responsable) {
 		this.responsable = responsable;
 	}
-
 	public List<Theme> getThemes() {
 		return themes;
 	}
-
 	public void setThemes(List<Theme> themes) {
 		this.themes = themes;
 	}
-
 	public TestPrerequis getTestPrerequis() {
 		return testPrerequis;
 	}
-
 	public void setTestPrerequis(TestPrerequis testPrerequis) {
 		this.testPrerequis = testPrerequis;
 	}
-
 	public List<Enseigner> getExperience() {
 		return experience;
 	}
-
 	public void setExperience(List<Enseigner> experience) {
 		this.experience = experience;
 	}
-
 	public List<Session> getSessions() {
 		return sessions;
 	}
-
 	public void setSessions(List<Session> sessions) {
 		this.sessions = sessions;
-	}
-	
+	}	
 }

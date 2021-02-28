@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import jags.backend.entities.Domaine;
 import jags.backend.entities.Theme;
 import jags.backend.services.ThemeService;
 
@@ -32,7 +30,6 @@ public class ThemeController {
 	public Theme findById(@PathVariable Long themeId) {
 		return this.service.findById(themeId);
 	}
-	
 	
 	@PostMapping("")
 	public Theme save(@RequestBody Theme entity) {
