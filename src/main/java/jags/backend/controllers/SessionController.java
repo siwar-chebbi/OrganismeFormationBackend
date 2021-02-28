@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jags.backend.DTO.SessionDTO;
 import jags.backend.entities.Session;
-import jags.backend.entities.Theme;
 import jags.backend.services.SessionService;
 
 @RestController
@@ -23,12 +22,12 @@ public class SessionController {
 
 	@Autowired
 	SessionService service;
-	
+
 	@GetMapping("")
 	public List<SessionDTO> findAll(){
 		return this.service.findAll();
 	}
-	
+
 	@GetMapping("/{id}")
 	public Session findById(@PathVariable Long sessionId) {
 		return this.service.findById(sessionId);

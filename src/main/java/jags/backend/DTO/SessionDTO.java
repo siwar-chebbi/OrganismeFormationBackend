@@ -4,21 +4,14 @@ import java.util.Date;
 
 public class SessionDTO {
 
-	private Long id;
 	private String numero;
 	private Integer type;
 	private Double prixHT;
 	private Integer duree;
 	private Date dateDebut;
-	private Long IdFormation;
-	private Long IdLieu;
+	private Long idFormation;
+	private Long idLieu;
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getNumero() {
 		return numero;
 	}
@@ -50,15 +43,16 @@ public class SessionDTO {
 		this.dateDebut = dateDebut;
 	}
 	public Long getIdFormation() {
-		return IdFormation;
+		return idFormation;
 	}
 	public void setIdFormation(Long idFormation) {
-		IdFormation = idFormation;
+		this.idFormation = idFormation;
 	}
 	public Long getIdLieu() {
-		return IdLieu;
+		return idLieu;
 	}
 	public void setIdLieu(Long idLieu) {
-		IdLieu = idLieu;
+		this.idLieu = idLieu;
 	}
+	
 }

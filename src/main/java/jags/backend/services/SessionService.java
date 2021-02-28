@@ -1,10 +1,10 @@
 package jags.backend.services;
 
-import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,6 @@ import jags.backend.repositories.SessionRepository;
 
 @Service
 public class SessionService {
-
 	@Autowired
 	private SessionRepository repository;
 	@Autowired
@@ -29,6 +28,7 @@ public class SessionService {
 	private LieuService lieuService;
 	@Autowired
 	private Session session;
+	
 	
 	/**
 	 * Récupération de toutes les sessions présentent en base de données
@@ -86,8 +86,7 @@ public class SessionService {
 	 */
 	public SessionDTO save(SessionDTO sessionDTO) {
 		sessionDTOToSession(sessionDTO);
-		this.session = this.repository.save(this.session);
-		return sessionToSessionDTO(session);
+		return sessionToSessionDTO(this.repository.save(this.session));
 	}
 	
 	/**
@@ -95,6 +94,8 @@ public class SessionService {
 	 * @param session format SessionDTO
 	 */
 	public void sessionDTOToSession(SessionDTO sessionDTO) {
+		// clear id of session
+		this.session.setId(null); 
 		this.session.setNumero(sessionDTO.getNumero());
 		this.session.setType(sessionDTO.getType());
 		this.session.setPrixHT(sessionDTO.getPrixHT());
