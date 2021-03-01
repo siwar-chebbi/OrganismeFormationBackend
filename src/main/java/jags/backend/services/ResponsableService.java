@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import jags.backend.DTO.FormationDTO;
+import jags.backend.DTO.ResponsableDTO;
 import jags.backend.entities.Responsable;
 import jags.backend.repositories.ResponsableRepository;
 
@@ -38,8 +40,39 @@ public class ResponsableService {
 				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 
-	public Responsable save(Responsable entity) {
-		return repository.save(entity);
+	public ResponsableDTO save(ResponsableDTO dto) {
+		Responsable entity = responsableDTOToResponsable(dto);
+		ResponsableDTO result = responsableToresponsableDTO(repository.save(entity));
+				
+		return result;
+	}
+	
+	
+	/**
+	 * Conversion d'un responsable au format DTO vers un responsable au format Responsable
+	 * @param  responsableDTO au format ResponsableDTO
+	 */
+	public Responsable responsableDTOToResponsable(ResponsableDTO responsableDTO) {
+		Responsable responsable = new Responsable();
+		responsable.setNom(responsableDTO.getNom());
+		responsable.setPrenom(responsableDTO.getPrenom());
+		responsable.setRole(responsableDTO.getRole());
+		responsable.setTelephone(responsableDTO.getTelephone());
+		return responsable;
+}
+	/**
+	 * Conversion d'un responsable  vers un responsable au format DTO
+	 * @param  responsableDTO au format ResponsableDTO
+	 */
+	public ResponsableDTO responsableToresponsableDTO(Responsable responsable) {
+		ResponsableDTO responsableDto = new ResponsableDTO();
+		responsableDto.setId(responsable.getId());
+		responsableDto.setNom(responsable.getNom());
+		responsableDto.setPrenom(responsable.getPrenom());
+		responsableDto.setMail(responsable.getMail());
+		responsableDto.setTelephone(responsable.getTelephone());
+		return responsableDto;
+		
 	}
 
 }

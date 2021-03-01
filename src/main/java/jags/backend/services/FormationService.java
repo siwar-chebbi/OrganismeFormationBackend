@@ -55,7 +55,8 @@ public class FormationService {
 	public List<FormationDTO> recupererListeFormationDTO(List<Formation> formations){
 		List<FormationDTO> formationsDTO = new ArrayList<FormationDTO>();
 		for (Formation formation : formations) {
-			formationsDTO.add(formationToFormationDTO(formation));
+			FormationDTO formationDto =formationToFormationDTO(formation);
+			formationsDTO.add(formationDto);
 		}
 		return formationsDTO;
 	}

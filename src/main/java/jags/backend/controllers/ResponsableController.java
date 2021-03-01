@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jags.backend.DTO.ResponsableDTO;
 import jags.backend.entities.Responsable;
 import jags.backend.services.ResponsableService;
 
@@ -47,8 +48,8 @@ public class ResponsableController {
 	}
 	
 	@PostMapping
-	public Responsable save(@RequestBody Responsable entity) {
-		return service.save(entity);
+	public ResponsableDTO save(@RequestBody ResponsableDTO dto) {
+		return service.save(dto);
 	}
 	
 
