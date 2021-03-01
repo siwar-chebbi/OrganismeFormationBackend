@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jags.backend.DTO.InscriptionParticipantEmploye;
 import jags.backend.DTO.InscriptionParticipantParticulier;
+import jags.backend.DTO.ResumeInscription;
 import jags.backend.entities.BilanParticipantSession;
 import jags.backend.services.BilanParticipantSessionService;
 
@@ -32,13 +33,13 @@ public class BilanParticipantSessionController {
 	}
 	
 	@PostMapping("/inscriptionSessionParticulier")
-	public void inscriptionSessionParticulier(@RequestBody InscriptionParticipantParticulier particulier) {
-		this.service.inscriptionSessionParticulier(particulier);
+	public ResumeInscription inscriptionSessionParticulier(@RequestBody InscriptionParticipantParticulier particulier) {
+		return this.service.inscriptionSessionParticulier(particulier);
 	}
 	
 	@PostMapping("/inscriptionSessionEntreprise")
-	public void inscriptionSession(@RequestBody InscriptionParticipantEmploye employe) {
-		this.service.inscriptionSessionEntreprise(employe);
+	public ResumeInscription inscriptionSession(@RequestBody InscriptionParticipantEmploye employe) {
+		return this.service.inscriptionSessionEntreprise(employe);
 	}
 
 	@PutMapping("/evaluations")

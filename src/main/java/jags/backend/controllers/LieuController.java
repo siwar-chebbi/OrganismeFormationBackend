@@ -29,11 +29,6 @@ public class LieuController {
 		this.service.deleteById(id);
 	}
 	
-//	@GetMapping("/disponibilite/{bool}")
-//	public List<Lieu> findByDisponibilite(@PathVariable Boolean bool){
-//		return this.service.finbByDisponibilite(bool);
-//	}
-	
 	@GetMapping("/session/{sessionId}")
 	public List<Lieu> findLieuBySessionId(@PathVariable Long sessionId){
 		return this.service.findLieuBySessionsId(sessionId);

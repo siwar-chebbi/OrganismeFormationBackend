@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jags.backend.DTO.AjoutParticipant;
 import jags.backend.entities.Participant;
 import jags.backend.services.ParticipantService;
 
@@ -38,8 +39,8 @@ public class ParticipantController {
 	}
 	
 	@PostMapping("")
-	public Participant save(@RequestBody Participant participant) {
-		return this.service.save(participant);
+	public AjoutParticipant save(@RequestBody AjoutParticipant nouveauParticipant) {
+		return this.service.saveNouveauParticipant(nouveauParticipant);
 	}
 	
 	@GetMapping("/session/{sessionId}")

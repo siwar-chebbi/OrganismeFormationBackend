@@ -81,6 +81,11 @@ public class SessionService {
 				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 	
+	/**
+	 * Recuperation d'une sessionDTO par son ID
+	 * @param id id de la session recherchee
+	 * @return le session de type SessionDTO
+	 */
 	public SessionDTO findByIdSessionDTO(Long id) {
 		return sessionToSessionDTO(findById(id));
 	}
@@ -159,11 +164,21 @@ public class SessionService {
 		return this.lieuService.findById(id);
 	}
 
+	/**
+	 * Recuperation de toute les sessions a partir d'un id formation
+	 * @param id de la formation pour laquelle on cherche les sessions
+	 * @return liste de session de type SessionDTO
+	 */
 	public List<SessionDTO> findAllByFormationId(Long id) {
 		List<Session> sessions = this.repository.findAllByFormationId(id);
 		return listSessionsToListSessionsDTO(sessions);
 	}
 	
+	/**
+	 *  Conversion d'un liste de Session vers une liste de SessionDTO
+	 * @param sessions liste de sessions à convertir
+	 * @return liste de Session type SessionDTO
+	 */
 	public List<SessionDTO> listSessionsToListSessionsDTO(List<Session> sessions){
 		List<SessionDTO> sessionsDTO = new ArrayList<SessionDTO>();
 		for (Session session : sessions) {

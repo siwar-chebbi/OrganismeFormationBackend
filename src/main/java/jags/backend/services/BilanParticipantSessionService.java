@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import jags.backend.DTO.CoordonneeDTO;
 import jags.backend.DTO.InscriptionParticipantEmploye;
 import jags.backend.DTO.InscriptionParticipantParticulier;
+import jags.backend.DTO.ResumeInscription;
 import jags.backend.entities.BilanParticipantSession;
 import jags.backend.entities.Coordonnee;
 import jags.backend.entities.Entreprise;
@@ -77,12 +78,21 @@ public class BilanParticipantSessionService {
 	 * @param sessionId : id de la session, requis pour l'insertion dans la table bilan
 	 * @param coordonnee : les coordonnes du particpant a ajouter ou mettre a jour dans la base de donnees
 	 */
-	public void inscriptionSessionParticulier(InscriptionParticipantParticulier particulier) {
-		
-		coordonneeDtoToCoordonnee(particulier.getCoordonneeParticipant());
+	public ResumeInscription inscriptionSessionParticulier(InscriptionParticipantParticulier particulier) {
 		traitementBilanEtCoordonneeParticipant(particulier.getIdParticipant(), particulier.getIdSession(), coordonnee);
+		coordonneeDtoToCoordonnee(particulier.getCoordonneeParticipant());
 		this.lieuService.save(session.getLieu());
 		this.participantService.save(participant);
+		return alimentationResumeInscription();
+	}
+	
+	public ResumeInscription alimentationResumeInscription() {
+		ResumeInscription resume = new ResumeInscription();
+		resume.setId(this.bilan.getId());
+		resume.setNomParticipant(participant.getNom());
+		resume.setPrenomParticipant(participant.getPrenom());
+		resume.setNumeroSessionEval(this.session.getNumero());
+		return resume;
 	}
 	
 	/**
@@ -115,10 +125,10 @@ public class BilanParticipantSessionService {
 	 * Alimentation du bilan avec le participant (id) et la session (id et numero de session)
 	 */
 	public void alimentationBilanParticipantEtSession() {
-		bilan.setId(null);
-		bilan.setParticipant(participant);
-		bilan.setSession(session);
-		bilan.setNumeroSessionEval(session.getNumero());
+		this.bilan = new BilanParticipantSession();
+		this.bilan.setParticipant(participant);
+		this.bilan.setSession(session);
+		this.bilan.setNumeroSessionEval(session.getNumero());
 	}
 	
 	/**
@@ -128,13 +138,14 @@ public class BilanParticipantSessionService {
 	 * @param bodyRequest String contenant les coordonnes du participant, de l'entreprise
 	 *  et les informations de l'entreprise
 	 */
-	public void inscriptionSessionEntreprise(InscriptionParticipantEmploye employe) {
+	public ResumeInscription inscriptionSessionEntreprise(InscriptionParticipantEmploye employe) {
 		coordonneeDtoToCoordonnee(employe.getCoordonneeParticipant());
 		traitementBilanEtCoordonneeParticipant(employe.getIdParticipant(), employe.getIdSession(), coordonnee);
 		coordonneeDtoToCoordonnee(employe.getCoordonneeEntreprise());
 		sauvegardeEntrepriseParticipant(employe.getEntreprise());
 		this.lieuService.save(session.getLieu());
 		this.participantService.save(participant);
+		return alimentationResumeInscription();
 	}
 	
 	/**
@@ -221,7 +232,7 @@ public class BilanParticipantSessionService {
 	 * Ajout du bilan en base de donnees 
 	 */
 	public void creationBilan() {
-		this.repository.save(bilan);
+		this.bilan = this.repository.save(bilan);
 	}
 
 	public void deleteByParticipantIdAndSessionId(Long participantId, Long sessionId) {
