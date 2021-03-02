@@ -13,8 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import jags.backend.DTO.SessionDTO;
+import jags.backend.DTO.SessionsParticipant;
+import jags.backend.entities.Coordonnee;
 import jags.backend.entities.Formation;
 import jags.backend.entities.Lieu;
+import jags.backend.entities.Participant;
 import jags.backend.entities.Session;
 import jags.backend.repositories.SessionRepository;
 
@@ -26,6 +29,12 @@ public class SessionService {
 	private FormationService formationService;
 	@Autowired
 	private LieuService lieuService;
+	@Autowired
+	private CoordonneeService coordonneeService;
+	@Autowired
+	private ParticipantService participantService;
+	@Autowired
+	private BilanParticipantSessionService bilanService;
 	@Autowired
 	private Session session;
 	
@@ -186,5 +195,34 @@ public class SessionService {
 		}
 		return sessionsDTO;
 		
+	}
+
+	public SessionsParticipant findSessionsByMailParticipant(String mail) {
+		SessionsParticipant sessionParticipant = new SessionsParticipant();
+		Coordonnee coordonnee = recuperationCoordonne(mail);
+		Participant participant = this.participantService.findByCoordonnee(coordonnee);
+		sessionParticipant.setIdParticipant(participant.getId());
+		sessionParticipant.setIdSessions(this.bilanService.findAllSessionIdByParticipant(participant));
+		sessionParticipant.setNumerosEvaluationSession(this.bilanService.findAllNumerosByParticipant(participant));
+		
+		return sessionParticipant;
+	}
+	
+	/**
+	 * Recuperation de Coordonnee  a partir d'un mail
+	 * @param mail dont on cherche l'id
+	 * @return la coordonnee de l'id
+	 */
+	public Coordonnee recuperationCoordonne(String mail) {
+		return this.coordonneeService.findByMail(mail);
+	}
+	
+	/**
+	 * Recuperation d'un participant a partir d'une coordonnee
+	 * @param coordonnee dont on cherche le participant
+	 * @return participant correspondant à la coordonnee
+	 */
+	public long findIdParticipantByCoordonnee(Coordonnee coordonnee) {
+		return this.participantService.findIdParticipantByCoordonneeId(coordonnee).getId();
 	}
 }

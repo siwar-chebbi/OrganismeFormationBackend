@@ -243,4 +243,26 @@ public class BilanParticipantSessionService {
 	public List<BilanParticipantSession> findParticipantBySessionId(Long sessionId) {
 		return this.repository.findParticipantBySessionId(sessionId);
 	}
+
+
+	public List<Long> findAllSessionIdByParticipant(Participant participant) {
+		List<BilanParticipantSession> bilans = this.repository.findAllSessionByParticipant(participant);
+		List<Long> ids = new ArrayList<Long>();
+		for (BilanParticipantSession bilan : bilans) {
+			Long id = bilan.getSession().getId();
+			ids.add(id);
+		}
+		return ids;
+	}
+
+	public List<String> findAllNumerosByParticipant(Participant participant) {
+
+		List<BilanParticipantSession> bilans = this.repository.findAllNumerosByParticipant(participant);
+		List<String> numeros = new ArrayList<String>();
+		for (BilanParticipantSession bilan : bilans) {
+			String numero = bilan.getNumeroSessionEval();
+			numeros.add(numero);
+		}
+		return numeros;
+	}
 }

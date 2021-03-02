@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jdbc.repository.query.Query;
 
 import jags.backend.entities.BilanParticipantSession;
+import jags.backend.entities.Participant;
+import jags.backend.entities.Session;
 
 public interface BilanParticipantSessionRepository extends JpaRepository<BilanParticipantSession, Long>{
 
@@ -17,4 +19,8 @@ public interface BilanParticipantSessionRepository extends JpaRepository<BilanPa
 			+ "INNER JOIN bilan_participant_session AS b ON p.id = b.participant_id"
 			+ "WHERE b.session_id = ?1")
 	List<BilanParticipantSession> findParticipantBySessionId(Long sessionId);
+
+	List<BilanParticipantSession> findAllNumerosByParticipant(Participant participant);
+
+	List<BilanParticipantSession> findAllSessionByParticipant(Participant participant);
 }

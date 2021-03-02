@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import jags.backend.DTO.AjoutParticipant;
 import jags.backend.entities.BilanParticipantSession;
+import jags.backend.entities.Coordonnee;
 import jags.backend.entities.Entreprise;
 import jags.backend.entities.Participant;
 import jags.backend.repositories.ParticipantRepository;
@@ -25,7 +26,7 @@ public class ParticipantService {
 	
 	@Autowired
 	private BilanParticipantSessionService bilanParticipantSessionService;
-	
+
 	@Autowired
 	private Entreprise entreprise;
 	@Autowired
@@ -103,4 +104,13 @@ public class ParticipantService {
 		}
 		return this.repository.findAllById(idParticipant);
 	}
+	
+	public Participant findIdParticipantByCoordonneeId(Coordonnee coordonnee) {
+		return this.repository.findByCoordonnee(coordonnee);
+	}
+
+	public Participant findByCoordonnee(Coordonnee coordonnee) {
+		return this.repository.findByCoordonnee(coordonnee);
+	}
+
 }
