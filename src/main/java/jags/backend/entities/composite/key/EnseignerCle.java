@@ -16,4 +16,18 @@ public class EnseignerCle implements Serializable {
 	@Column(name="Formateur_id")
 	private Long formateurId;
 
+	public Long getFormationId() {
+		return formationId;
+	}
+	public void setFormationId(Long formationId) {
+		this.formationId = formationId;
+	}
+	public Long getFormateurId() {
+		return formateurId;
+	}
+	public void setFormateurId(Long formateurId) {
+		this.formateurId = formateurId;
+	}
+	
+
 }
