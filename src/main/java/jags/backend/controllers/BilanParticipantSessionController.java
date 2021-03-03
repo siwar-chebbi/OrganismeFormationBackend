@@ -51,4 +51,6 @@ public class BilanParticipantSessionController {
 	public void deleteByParticipantIdAndSessionId(@PathVariable Long participantId, Long sessionId) {
 		this.service.deleteByParticipantIdAndSessionId(participantId, sessionId);
 	}
+	
+	
 }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jags.backend.DTO.SessionDTO;
@@ -45,7 +47,8 @@ public class SessionController {
 	}
 	
 	@GetMapping("/mail")
-	public SessionsParticipant findSessionsByMailParticipant(@RequestBody String mail) {
+	public SessionsParticipant findSessionsByMailParticipant(@RequestParam String mail) {
+		System.out.println("findSessionsByMailParticipant " +mail.toString() );
 		return this.service.findSessionsByMailParticipant(mail);
 	}
 }
