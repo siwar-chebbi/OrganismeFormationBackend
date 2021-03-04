@@ -1,14 +1,13 @@
 package jags.backend.services;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import jags.backend.DTO.FormationDTO;
 import jags.backend.DTO.ResponsableDTO;
 import jags.backend.entities.Responsable;
 import jags.backend.repositories.ResponsableRepository;
@@ -31,9 +30,6 @@ public class ResponsableService {
 		return repository.findByMail(mail);
 	}
 
-	public List<Responsable> findAll() {
-		return repository.findAll();
-	}
 
 	public Responsable findById(Long id) {
 		return repository.findById(id)
@@ -42,27 +38,27 @@ public class ResponsableService {
 
 	public ResponsableDTO save(ResponsableDTO dto) {
 		Responsable entity = responsableDTOToResponsable(dto);
-		ResponsableDTO result = responsableToresponsableDTO(repository.save(entity));
-				
-		return result;
+		return responsableToresponsableDTO(repository.save(entity));
 	}
 	
 	
 	/**
-	 * Conversion d'un responsable au format DTO vers un responsable au format Responsable
-	 * @param  responsableDTO au format ResponsableDTO
+	 * Conversion d'un responsable au format DTO vers un responsable au format entité
+	 * @param  responsableDTO au format {@link ResponsableDTO}
 	 */
 	public Responsable responsableDTOToResponsable(ResponsableDTO responsableDTO) {
 		Responsable responsable = new Responsable();
 		responsable.setNom(responsableDTO.getNom());
 		responsable.setPrenom(responsableDTO.getPrenom());
 		responsable.setRole(responsableDTO.getRole());
+		responsable.setMail(responsableDTO.getMail());
 		responsable.setTelephone(responsableDTO.getTelephone());
 		return responsable;
 }
 	/**
-	 * Conversion d'un responsable  vers un responsable au format DTO
-	 * @param  responsableDTO au format ResponsableDTO
+	 * Conversion d'un responsable entité  vers un responsable au format DTO
+	 * @param  responsable au format {@link Responsable}
+     * @return responsableDto au format {@link ResponsableDTO}
 	 */
 	public ResponsableDTO responsableToresponsableDTO(Responsable responsable) {
 		ResponsableDTO responsableDto = new ResponsableDTO();
@@ -74,5 +70,30 @@ public class ResponsableService {
 		return responsableDto;
 		
 	}
+	
+	/**
+	 * Conversion d'un responsable entité vers un responsable au format DTO
+	 * @param responsable au format {@link Responsable}
+	 * @return responsableDto au format {@link ResponsableDTO}
+	 */
+	public ResponsableDTO responsableToresponsableLightDTO(Responsable responsable) {
+		ResponsableDTO responsableDto = new ResponsableDTO();
+		responsableDto.setId(responsable.getId());
+		responsableDto.setNom(responsable.getNom());
+		responsableDto.setPrenom(responsable.getPrenom());
+		return responsableDto;
+		
+	}
+	
+
+	public List<ResponsableDTO> findAll() {
+		List<Responsable> responsables = repository.findAll();
+		List<ResponsableDTO> responsableDTOs = new ArrayList<>();
+		for (Responsable responsable : responsables) {
+			responsableDTOs.add(responsableToresponsableLightDTO(responsable));
+		}
+		return responsableDTOs;
+	}
+	
 
 }

@@ -24,8 +24,8 @@ public class ResponsableController {
 	private ResponsableService service;
 
 	@GetMapping("")
-	public List<Responsable> findAll() {
-		return this.service.findAll();
+	public List<ResponsableDTO> findAll() {
+		return service.findAll();
 	}
 	
 	@GetMapping("nom/{nom}")

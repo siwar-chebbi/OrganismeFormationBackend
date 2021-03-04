@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import jags.backend.DTO.ThemeDTO;
 import jags.backend.entities.Theme;
 import jags.backend.services.ThemeService;
 
@@ -22,13 +24,13 @@ public class ThemeController {
 	private ThemeService service;
 	
 	@GetMapping("")
-	public List<Theme> findAll() {
+	public List<ThemeDTO> findAll() {
 		return this.service.findAll();
 	}
 	
 	@GetMapping("/{themeId}")
-	public Theme findById(@PathVariable Long themeId) {
-		return this.service.findById(themeId);
+	public ThemeDTO findById(@PathVariable Long themeId) {
+		return this.service.findDtoById(themeId);
 	}
 	
 	@PostMapping("")

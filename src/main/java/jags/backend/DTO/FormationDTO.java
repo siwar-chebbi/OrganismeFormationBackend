@@ -1,5 +1,6 @@
 package jags.backend.DTO;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 public class FormationDTO {
@@ -63,5 +64,9 @@ public class FormationDTO {
 	public void setIdTheme(List<Long> idTheme) {
 		this.idTheme = idTheme;
 	}
-	
+
+	@Override
+	public String toString() {
+		return MessageFormat.format("FormationDTO'{'id={0}, contenu=''{1}'', logiciel=''{2}'', numero={3}, support=''{4}'', titre=''{5}'', idResponsable={6}, idTheme={7}'}'", id, contenu, logiciel, numero, support, titre, idResponsable, idTheme);
+	}
 }

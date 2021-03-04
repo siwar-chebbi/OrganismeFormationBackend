@@ -2,12 +2,13 @@ package jags.backend.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import jags.backend.DTO.FormationDTO;
-import jags.backend.entities.Enseigner;
 import jags.backend.entities.Formation;
 import jags.backend.entities.Responsable;
 import jags.backend.entities.Theme;
@@ -36,6 +37,7 @@ public class FormationService {
 	}
 	
 	public Formation findById(Long id) {
+
 		return repository.findById(id)
 				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
@@ -53,7 +55,7 @@ public class FormationService {
 	 * @return Une liste de formations de type FormationDTO (format FRONTEND)
 	 */
 	public List<FormationDTO> recupererListeFormationDTO(List<Formation> formations){
-		List<FormationDTO> formationsDTO = new ArrayList<FormationDTO>();
+		List<FormationDTO> formationsDTO = new ArrayList<>();
 		for (Formation formation : formations) {
 			FormationDTO formationDto =formationToFormationDTO(formation);
 			formationsDTO.add(formationDto);
@@ -76,7 +78,7 @@ public class FormationService {
 
 	/**
 	 * Conversion d'une formation au format DTO vers une formation au format Formation
-	 * @param formation au format FormationDTO
+	 * @param formationDTO au format FormationDTO
 	 */
 	public void formationDTOToFormation(FormationDTO formationDTO) {
 		this.formation.setId(null);
@@ -93,7 +95,7 @@ public class FormationService {
 	}
 	
 	public List<Theme> recuperationListThemeParId(List<Long> themeIds){
-		List<Theme> themes = new ArrayList<Theme>();
+		List<Theme> themes = new ArrayList<>();
 		for (Long themeId : themeIds) {
 			themes.add(recupererThemeById(themeId));
 		}
@@ -114,7 +116,8 @@ public class FormationService {
 		formationDTO.setLogiciel(formation.getLogiciel());
 		formationDTO.setSupport(formation.getSupport());
 		formationDTO.setIdResponsable(formation.getResponsable().getId());
-		//formationDTO.setIdTheme(formation.getThemes().get(0).getId());		
+		//formationDTO.setIdTheme(formation.getThemes().get(0).getId());
+		formationDTO.setIdTheme(formation.getThemes().stream().map(Theme::getId).collect(Collectors.toList()));
 		return formationDTO;
 	}
 	
@@ -124,10 +127,10 @@ public class FormationService {
 	 * @return formation format DTO pour récupération de l'id dans le FRONTEND
 	 */
 	public FormationDTO save(FormationDTO formationDTO) {
-		formationDTOToFormation(formationDTO);
-		for (Theme theme : formation.getThemes()) {
-		}
-		this.formation = this.repository.save(this.formation);
+	    formationDTOToFormation(formationDTO);
+		//for (Theme theme : formation.getThemes()) {
+		//}
+		this.formation = repository.save(this.formation);
 		return formationToFormationDTO(formation);
 	}
 
@@ -149,7 +152,7 @@ public class FormationService {
 	 * @return liste de foramtion type FormationDTO
 	 */
 	public List<FormationDTO> listeFormationtoFormationDTO(List<Formation> formations){
-		List<FormationDTO> formationsDTO = new ArrayList<FormationDTO>();
+		List<FormationDTO> formationsDTO = new ArrayList<>();
 		for (Formation formation : formations) {
 			formationsDTO.add(formationToFormationDTO(formation));
 		}
@@ -162,10 +165,8 @@ public class FormationService {
 	 * @return liste de formation type Formation
 	 */
 	public List<Formation>recuperationListeFormationParIdTheme(Long id) {
-		List<Long> formationIds = new ArrayList<Long>();
 		Theme themeFormation = this.themeService.findById(id);
-		List<Formation> formations = this.repository.findAllByThemes(themeFormation);
-		return formations;
+		return this.repository.findAllByThemes(themeFormation);
 	}
 	
 }
