@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import jags.backend.DTO.AjoutParticipant;
 import jags.backend.entities.BilanParticipantSession;
 import jags.backend.entities.Entreprise;
 import jags.backend.entities.Participant;
@@ -27,6 +28,8 @@ public class ParticipantService {
 	
 	@Autowired
 	private Entreprise entreprise;
+	@Autowired
+	private Participant participant;
 
 	/**
 	 * Récupère tout les participants contenu dans la bdd
@@ -36,6 +39,34 @@ public class ParticipantService {
 		return this.repository.findAll();
 	}
 
+	/**
+	 * Ajoute un participant en base de donnée 
+	 * @param participant participant que l'on veut ajouter
+	 * @return le participant ajoutée
+	 */
+	public AjoutParticipant saveNouveauParticipant(AjoutParticipant nouveauParticipant) {
+		this.participant = save(ajoutParticipantToParticipant(nouveauParticipant));
+		return ParticipantToAjoutParticipant(this.participant);
+	}
+	
+	public Participant ajoutParticipantToParticipant(AjoutParticipant nouveauParticipant) {
+		this.participant = new Participant();
+		this.participant.setNom(nouveauParticipant.getNom());
+		this.participant.setPrenom(nouveauParticipant.getPrenom());
+		this.participant.setCivilite(nouveauParticipant.getCivilite());
+		this.participant.setDateNaissance(nouveauParticipant.getDateNaissance());
+		return this.participant;
+	}
+	
+	public AjoutParticipant ParticipantToAjoutParticipant(Participant participant) {
+		AjoutParticipant ajoutParticipant = new AjoutParticipant();
+		ajoutParticipant.setId(participant.getId());
+		ajoutParticipant.setNom(participant.getNom());
+		ajoutParticipant.setPrenom(participant.getPrenom());
+		ajoutParticipant.setCivilite(participant.getCivilite());
+		ajoutParticipant.setDateNaissance(participant.getDateNaissance());
+		return ajoutParticipant;
+	}
 	/**
 	 * Ajoute un participant en base de donnée 
 	 * @param participant participant que l'on veut ajouter

@@ -33,10 +33,6 @@ public class LieuService {
 	public void deleteById(Long id) {
 		this.repository.deleteById(id);
 	}
-	
-//	public List<Lieu> finbByDisponibilite(Boolean bool){
-//		return this.repository.finbByDisponibilite(bool);
-//	}
 
 	public List<Lieu> findLieuBySessionsId(Long sessionId) {
 		return this.repository.findLieuBySessionsId(sessionId);
