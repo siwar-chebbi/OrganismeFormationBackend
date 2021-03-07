@@ -48,7 +48,6 @@ public class SessionController {
 	
 	@GetMapping("/mail")
 	public SessionsParticipant findSessionsByMailParticipant(@RequestParam String mail) {
-		System.out.println("findSessionsByMailParticipant " +mail.toString() );
 		return this.service.findSessionsByMailParticipant(mail);
 	}
 }
