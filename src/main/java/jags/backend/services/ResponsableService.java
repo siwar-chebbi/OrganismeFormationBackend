@@ -17,6 +17,29 @@ public class ResponsableService {
 	
 	@Autowired
 	private ResponsableRepository repository;
+	
+	/**
+	 * Méthode de Jamal
+	 * @return tous les champs de Responsable
+	 */
+	public List<ResponsableDTO> findAll() {
+		List<Responsable> responsables = repository.findAll();
+		List<ResponsableDTO> responsableDTOs = new ArrayList<>();
+		for (Responsable responsable : responsables) {
+			responsableDTOs.add(responsableToresponsableDTO(responsable));
+		}
+		return responsableDTOs;
+	}
+	
+	public Responsable findById(Long id) {
+		return repository.findById(id)
+				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+	}
+	
+	public ResponsableDTO save(ResponsableDTO dto) {
+		Responsable entity = responsableDTOToResponsable(dto);
+		return responsableToresponsableDTO(repository.save(entity));
+	}
 
 	public List<Responsable> findByNom(String nom) {
 		return repository.findByNom(nom);
@@ -29,17 +52,6 @@ public class ResponsableService {
 	public List<Responsable> findByMail(String mail) {
 		return repository.findByMail(mail);
 	}
-
-
-	public Responsable findById(Long id) {
-		return repository.findById(id)
-				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
-	}
-
-	public ResponsableDTO save(ResponsableDTO dto) {
-		Responsable entity = responsableDTOToResponsable(dto);
-		return responsableToresponsableDTO(repository.save(entity));
-	}
 	
 	
 	/**
@@ -50,9 +62,12 @@ public class ResponsableService {
 		Responsable responsable = new Responsable();
 		responsable.setNom(responsableDTO.getNom());
 		responsable.setPrenom(responsableDTO.getPrenom());
+		responsable.setCivilite(responsableDTO.getCivilite());
 		responsable.setRole(responsableDTO.getRole());
 		responsable.setMail(responsableDTO.getMail());
 		responsable.setTelephone(responsableDTO.getTelephone());
+		responsable.setIdentifiant(responsableDTO.getIdentifiant());
+		responsable.setMdp(responsableDTO.getMdp());
 		return responsable;
 }
 	/**
@@ -65,10 +80,12 @@ public class ResponsableService {
 		responsableDto.setId(responsable.getId());
 		responsableDto.setNom(responsable.getNom());
 		responsableDto.setPrenom(responsable.getPrenom());
+		responsableDto.setCivilite(responsable.getCivilite());
 		responsableDto.setMail(responsable.getMail());
 		responsableDto.setTelephone(responsable.getTelephone());
-		return responsableDto;
-		
+		responsableDto.setIdentifiant(responsable.getIdentifiant());
+		responsableDto.setMdp(responsable.getMdp());
+		return responsableDto;		
 	}
 	
 	/**
@@ -81,19 +98,22 @@ public class ResponsableService {
 		responsableDto.setId(responsable.getId());
 		responsableDto.setNom(responsable.getNom());
 		responsableDto.setPrenom(responsable.getPrenom());
-		return responsableDto;
-		
+		return responsableDto;		
 	}
 	
 
-	public List<ResponsableDTO> findAll() {
-		List<Responsable> responsables = repository.findAll();
-		List<ResponsableDTO> responsableDTOs = new ArrayList<>();
-		for (Responsable responsable : responsables) {
-			responsableDTOs.add(responsableToresponsableLightDTO(responsable));
-		}
-		return responsableDTOs;
-	}
+	/**
+	 * Méthode de Siwar
+	 * @return les champs Id, nom et prenom
+	 */
+//	public List<ResponsableDTO> findAll() {
+//		List<Responsable> responsables = repository.findAll();
+//		List<ResponsableDTO> responsableDTOs = new ArrayList<>();
+//		for (Responsable responsable : responsables) {
+//			responsableDTOs.add(responsableToresponsableLightDTO(responsable));
+//		}
+//		return responsableDTOs;
+//	}
 	
 
 }

@@ -20,6 +20,9 @@ public class Responsable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(name = "Civilite")
+	private Boolean civilite;
+	
 	@Column(name ="Nom", length=45)
 	private String nom;
 	
@@ -35,57 +38,58 @@ public class Responsable {
 	@Column(name ="Telephone", length=25)
 	private String telephone;
 	
+	@Column(name = "Identifiant", length = 100)
+	private String identifiant;
+	
+	@Column(name = "Mdp", length = 100)
+	private String mdp;
+	
 	@OneToMany(mappedBy = "responsable")
 	private List<Formation> formations;
 
 	public Long getId() {
 		return id;
 	}
-
+	public void setId(Long id) {
+		this.id = id;
+	}	
+	public Boolean getCivilite() {
+		return civilite;
+	}
+	public void setCivilite(Boolean civilite) {
+		this.civilite = civilite;
+	}
 	public String getNom() {
 		return nom;
 	}
-
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 	public String getPrenom() {
 		return prenom;
+	}
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
 	}
 
 	public String getRole() {
 		return role;
 	}
-
-	public String getMail() {
-		return mail;
-	}
-
-	public String getTelephone() {
-		return telephone;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-
 	public void setRole(String role) {
 		this.role = role;
 	}
-
+	public String getMail() {
+		return mail;
+	}
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-
+	public String getTelephone() {
+		return telephone;
+	}
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-
 	public List<Formation> getFormations() {
 		return formations;
 	}
@@ -93,5 +97,16 @@ public class Responsable {
 	public void setFormations(List<Formation> formations) {
 		this.formations = formations;
 	}
-	
+	public String getIdentifiant() {
+		return identifiant;
+	}
+	public void setIdentifiant(String identifiant) {
+		this.identifiant = identifiant;
+	}
+	public String getMdp() {
+		return mdp;
+	}
+	public void setMdp(String mdp) {
+		this.mdp = mdp;
+	}	
 }

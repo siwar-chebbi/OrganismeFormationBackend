@@ -9,6 +9,8 @@ public class AjoutParticipant {
 	private Date dateNaissance;
 	private String nom;
 	private String prenom;
+	private String identifiant;
+	private String mdp;
 	
 	public long getId() {
 		return id;
@@ -40,6 +42,16 @@ public class AjoutParticipant {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	
-	
+	public String getIdentifiant() {
+		return identifiant;
+	}
+	public void setIdentifiant(String identifiant) {
+		this.identifiant = identifiant;
+	}
+	public String getMdp() {
+		return mdp;
+	}
+	public void setMdp(String mdp) {
+		this.mdp = mdp;
+	}	
 }

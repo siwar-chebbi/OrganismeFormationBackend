@@ -55,6 +55,8 @@ public class ParticipantService {
 		this.participant.setPrenom(nouveauParticipant.getPrenom());
 		this.participant.setCivilite(nouveauParticipant.getCivilite());
 		this.participant.setDateNaissance(nouveauParticipant.getDateNaissance());
+		this.participant.setIdentifiant(nouveauParticipant.getIdentifiant());
+		this.participant.setMdp(nouveauParticipant.getMdp());
 		return this.participant;
 	}
 	
@@ -65,6 +67,8 @@ public class ParticipantService {
 		ajoutParticipant.setPrenom(participant.getPrenom());
 		ajoutParticipant.setCivilite(participant.getCivilite());
 		ajoutParticipant.setDateNaissance(participant.getDateNaissance());
+		ajoutParticipant.setIdentifiant(participant.getIdentifiant());
+		ajoutParticipant.setMdp(participant.getMdp());
 		return ajoutParticipant;
 	}
 	/**

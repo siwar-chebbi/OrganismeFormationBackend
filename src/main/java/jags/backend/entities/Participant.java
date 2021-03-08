@@ -44,6 +44,12 @@ public class Participant {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DateNaissance")
 	private Date dateNaissance;
+	
+	@Column(name = "Identifiant", length = 100)
+	private String identifiant;
+	
+	@Column(name = "Mdp", length = 100)
+	private String mdp;
 
 	@ManyToOne
 	@JoinColumn(name = "Entreprise_id")
@@ -94,6 +100,22 @@ public class Participant {
 
 	public void setDateNaissance(Date dateNaissance) {
 		this.dateNaissance = dateNaissance;
+	}
+
+	public String getIdentifiant() {
+		return identifiant;
+	}
+
+	public void setIdentifiant(String identifiant) {
+		this.identifiant = identifiant;
+	}
+
+	public String getMdp() {
+		return mdp;
+	}
+
+	public void setMdp(String mdp) {
+		this.mdp = mdp;
 	}
 
 	public Entreprise getEntreprise() {
