@@ -19,8 +19,8 @@ public class ResponsableService {
 	private ResponsableRepository repository;
 	
 	/**
-	 * Méthode de Jamal
-	 * @return tous les champs de Responsable
+	 * Récupère tout les responsables contenu dans la bdd
+	 * @return la liste de tout les responsables
 	 */
 	public List<ResponsableDTO> findAll() {
 		List<Responsable> responsables = repository.findAll();
