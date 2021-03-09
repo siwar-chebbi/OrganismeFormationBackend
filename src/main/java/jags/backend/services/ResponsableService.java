@@ -87,33 +87,5 @@ public class ResponsableService {
 		responsableDto.setMdp(responsable.getMdp());
 		return responsableDto;		
 	}
-	
-	/**
-	 * Conversion d'un responsable entité vers un responsable au format DTO
-	 * @param responsable au format {@link Responsable}
-	 * @return responsableDto au format {@link ResponsableDTO}
-	 */
-	public ResponsableDTO responsableToresponsableLightDTO(Responsable responsable) {
-		ResponsableDTO responsableDto = new ResponsableDTO();
-		responsableDto.setId(responsable.getId());
-		responsableDto.setNom(responsable.getNom());
-		responsableDto.setPrenom(responsable.getPrenom());
-		return responsableDto;		
-	}
-	
-
-	/**
-	 * Méthode de Siwar
-	 * @return les champs Id, nom et prenom
-	 */
-//	public List<ResponsableDTO> findAll() {
-//		List<Responsable> responsables = repository.findAll();
-//		List<ResponsableDTO> responsableDTOs = new ArrayList<>();
-//		for (Responsable responsable : responsables) {
-//			responsableDTOs.add(responsableToresponsableLightDTO(responsable));
-//		}
-//		return responsableDTOs;
-//	}
-	
 
 }
