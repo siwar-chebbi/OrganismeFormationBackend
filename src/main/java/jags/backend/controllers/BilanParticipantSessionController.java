@@ -34,6 +34,7 @@ public class BilanParticipantSessionController {
 	
 	@PostMapping("/inscriptionSessionParticulier")
 	public ResumeInscription inscriptionSessionParticulier(@RequestBody InscriptionParticipantParticulier particulier) {
+		System.out.println("Bilan controller -> inscriptionSessionParticulier");
 		return this.service.inscriptionSessionParticulier(particulier);
 	}
 	

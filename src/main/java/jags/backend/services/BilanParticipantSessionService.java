@@ -79,19 +79,34 @@ public class BilanParticipantSessionService {
 	 * @param coordonnee : les coordonnes du particpant a ajouter ou mettre a jour dans la base de donnees
 	 */
 	public ResumeInscription inscriptionSessionParticulier(InscriptionParticipantParticulier particulier) {
+		System.out.println("Service controller -> inscriptionSessionParticulier");
+		System.out.println("Service controller -> avant traitementBilanEtCoordonneeParticipant");
 		traitementBilanEtCoordonneeParticipant(particulier.getIdParticipant(), particulier.getIdSession(), coordonnee);
+		System.out.println("Service controller -> apres traitementBilanEtCoordonneeParticipant");
+		System.out.println("Service controller -> avant coordonneeDtoToCoordonnee");
 		coordonneeDtoToCoordonnee(particulier.getCoordonneeParticipant());
+		System.out.println("Service controller -> apres coordonneeDtoToCoordonnee");
 		this.lieuService.save(session.getLieu());
 		this.participantService.save(participant);
+		System.out.println("Service controller -> avant alimentationResumeInscription");
 		return alimentationResumeInscription();
 	}
 	
 	public ResumeInscription alimentationResumeInscription() {
+		System.out.println("Service controller -> alimentationResumeInscription");
 		ResumeInscription resume = new ResumeInscription();
+		System.out.println("Service controller -> avant alimentation Bilan");
 		resume.setId(this.bilan.getId());
+		System.out.println("Service controller -> apres alimentation Bilan");
+		System.out.println("Service controller -> avant alimentation nomParticipant");
 		resume.setNomParticipant(participant.getNom());
+		System.out.println("Service controller -> apres alimentation nomParticipant");
+		System.out.println("Service controller -> avant alimentation prenomParticipant");
 		resume.setPrenomParticipant(participant.getPrenom());
+		System.out.println("Service controller -> apres alimentation prenomParticipant");
+		System.out.println("Service controller -> avant alimentation numeroSessionEval");
 		resume.setNumeroSessionEval(this.session.getNumero());
+		System.out.println("Service controller -> apres alimentation numeroSessionEval");
 		return resume;
 	}
 	
