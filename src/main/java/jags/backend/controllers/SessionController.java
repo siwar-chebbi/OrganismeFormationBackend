@@ -47,7 +47,7 @@ public class SessionController {
 	}
 	
 	@GetMapping("/mail")
-	public SessionsParticipant findSessionsByMailParticipant(@RequestParam String mail) {
+	public List<SessionsParticipant> findSessionsByMailParticipant(@RequestParam String mail) {
 		return this.service.findSessionsByMailParticipant(mail);
 	}
 }

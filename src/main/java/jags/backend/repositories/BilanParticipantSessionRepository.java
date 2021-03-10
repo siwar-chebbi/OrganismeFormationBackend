@@ -23,4 +23,6 @@ public interface BilanParticipantSessionRepository extends JpaRepository<BilanPa
 	List<BilanParticipantSession> findAllNumerosByParticipant(Participant participant);
 
 	List<BilanParticipantSession> findAllSessionByParticipant(Participant participant);
+
+	List<BilanParticipantSession> findAllByParticipant(Participant participant);
 }

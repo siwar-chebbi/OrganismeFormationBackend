@@ -168,5 +168,10 @@ public class FormationService {
 		Theme themeFormation = this.themeService.findById(id);
 		return this.repository.findAllByThemes(themeFormation);
 	}
+
+	public String findTitreById(Long id) {
+		return this.repository.findTitreById(id);
+		
+	}
 	
 }

@@ -1,33 +1,19 @@
 package jags.backend.DTO;
 
-import java.util.List;
-
 public class SessionsParticipant {
 
-	private List<Long> idSessions;
-	private long idParticipant;
-	private List<String> numerosEvaluationSession;
-	
-	
-	
-	public List<Long> getIdSessions() {
-		return idSessions;
+	private Long idBilan;
+	private String titre;
+	public Long getIdBilan() {
+		return idBilan;
 	}
-	public void setIdSessions(List<Long> idSessions) {
-		this.idSessions = idSessions;
+	public void setIdBilan(Long idBilan) {
+		this.idBilan = idBilan;
 	}
-	public long getIdParticipant() {
-		return idParticipant;
+	public String getTitre() {
+		return titre;
 	}
-	public void setIdParticipant(long idParticipant) {
-		this.idParticipant = idParticipant;
+	public void setTitre(String titre) {
+		this.titre = titre;
 	}
-	public List<String> getNumerosEvaluationSession() {
-		return numerosEvaluationSession;
-	}
-	public void setNumerosEvaluationSession(List<String> numerosEvaluationSession) {
-		this.numerosEvaluationSession = numerosEvaluationSession;
-	}
-	
-	
 }

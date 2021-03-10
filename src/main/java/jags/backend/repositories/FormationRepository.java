@@ -11,5 +11,6 @@ public interface FormationRepository extends JpaRepository<Formation, Long>{
 	public List<Formation> findByContenu(String contenu);
 	public List<Formation> findByTitre(String titre);
 	public List<Formation> findAllByThemes(Theme themes);
+	public String findTitreById(Long id);
 
 }

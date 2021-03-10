@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import jags.backend.DTO.SessionDTO;
 import jags.backend.DTO.SessionsParticipant;
+import jags.backend.entities.BilanParticipantSession;
 import jags.backend.entities.Coordonnee;
 import jags.backend.entities.Formation;
 import jags.backend.entities.Lieu;
@@ -35,6 +36,8 @@ public class SessionService {
 	private ParticipantService participantService;
 	@Autowired
 	private BilanParticipantSessionService bilanService;
+	@Autowired
+	private SessionService sessionService;
 	@Autowired
 	private Session session;
 	
@@ -197,15 +200,26 @@ public class SessionService {
 		
 	}
 
-	public SessionsParticipant findSessionsByMailParticipant(String mail) {
-		SessionsParticipant sessionParticipant = new SessionsParticipant();
+	/**
+	 * Recuperation de la liste des sessions à laquelle un participant a participant pour l'evaluation a partir d'une adresse mail
+	 * @param mail du participant souhaitant evaluer une session
+	 * @return une liste d'IdBilan et de titre de formation, pour que l'utilisateur puisse choisir la sessions a evaluer
+	 */
+	public List<SessionsParticipant> findSessionsByMailParticipant(String mail) {
+		List<SessionsParticipant> sessionsParticipant = new ArrayList<SessionsParticipant>();
 		Coordonnee coordonnee = recuperationCoordonne(mail);
 		Participant participant = this.participantService.findByCoordonnee(coordonnee);
-		sessionParticipant.setIdParticipant(participant.getId());
-		sessionParticipant.setIdSessions(this.bilanService.findAllSessionIdByParticipant(participant));
-		sessionParticipant.setNumerosEvaluationSession(this.bilanService.findAllNumerosByParticipant(participant));
-		
-		return sessionParticipant;
+		List<BilanParticipantSession> bilans = new ArrayList<BilanParticipantSession>();
+		bilans = this.bilanService.findAllByParticipant(participant);
+		for (BilanParticipantSession bilan : bilans) {
+			SessionsParticipant sessionParticipant = new SessionsParticipant();
+			sessionParticipant.setIdBilan(bilan.getId());
+			session = sessionService.findById(bilan.getSession().getId());
+			String titreFormation = session.getFormation().getTitre();
+			sessionParticipant.setTitre(titreFormation);
+			sessionsParticipant.add(sessionParticipant);
+		}
+		return sessionsParticipant;
 	}
 	
 	/**
