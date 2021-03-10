@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.text.MessageFormat;
 
 @Entity
 @Table(name="Domaine")
@@ -40,7 +41,9 @@ public class Domaine {
 	public void setDescription(String description) {
 		Description = description;
 	}
-	
-	
 
+	@Override
+	public String toString() {
+		return MessageFormat.format("Domaine{id={0}, Nom={1}, Description={2}}", id, Nom, Description);
+	}
 }

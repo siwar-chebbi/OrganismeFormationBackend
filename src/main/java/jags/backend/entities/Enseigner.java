@@ -2,26 +2,32 @@ package jags.backend.entities;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.Table;
+
+import org.springframework.stereotype.Component;
 
 import jags.backend.entities.composite.key.EnseignerCle;
 
 @Entity
+@Component
+@Table(name="Enseigner")
 public class Enseigner {
 	
 	@EmbeddedId
 	private EnseignerCle id;
 	
-	@ManyToOne
-	@MapsId("formateurId")
-	@JoinColumn(name="Formateur_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	//@MapsId("idFormateur")
+	@JoinColumn(name="Formateur_id", nullable=false, insertable = false, updatable = false)
 	private Formateur formateur;
 	
-	@ManyToOne
-	@MapsId("formationId")
-	@JoinColumn(name="Formation_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	//@MapsId("idFormation")
+	@JoinColumn(name="Formation_id", nullable=false, insertable = false, updatable = false)
 	private Formation formation;
 	
 	private Integer experience;
@@ -50,6 +56,11 @@ public class Enseigner {
 	}
 	public void setExperience(Integer experience) {
 		this.experience = experience;
+	}
+	@Override
+	public String toString() {
+		return "Enseigner [id=" + id + ", formateurID=" + formateur.getId() + ", formationID=" + formation.getId() + ", experience="
+				+ experience + "]";
 	}
 	
 	

@@ -1,7 +1,9 @@
 package jags.backend.controllers;
 
+import java.text.MessageFormat;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import jags.backend.services.FormationService;
 
 @RestController
 @RequestMapping("formations")
+@Slf4j
 @CrossOrigin
 public class FormationController {
 	
@@ -40,6 +43,7 @@ public class FormationController {
 	
 	@PostMapping("")
 	public FormationDTO save(@RequestBody FormationDTO entity) {
+		log.info(MessageFormat.format("starting saving formation, {0}", entity.toString()));
 		return service.save(entity);
 	}
 

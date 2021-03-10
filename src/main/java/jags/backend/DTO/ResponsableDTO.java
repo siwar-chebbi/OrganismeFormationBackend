@@ -1,62 +1,27 @@
-package jags.backend.entities;
+package jags.backend.DTO;
 
-import java.util.List;
+public class ResponsableDTO {
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.springframework.stereotype.Component;
-
-@Entity 
-@Component
-@Table(name="Responsable")
-public class Responsable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name = "Civilite")
-	private Boolean civilite;
-	
-	@Column(name ="Nom", length=45)
+	private boolean civilite;
 	private String nom;
-	
-	@Column(name ="Prenom", length=45)
 	private String prenom;
-	
-	@Column(name ="Role", length=80)
 	private String role;
-	
-	@Column(name ="Mail", length=80)
 	private String mail;
-	
-	@Column(name ="Telephone", length=25)
 	private String telephone;
-	
-	@Column(name = "Identifiant", length = 100)
 	private String identifiant;
-	
-	@Column(name = "Mdp", length = 100)
 	private String mdp;
 	
-	@OneToMany(mappedBy = "responsable")
-	private List<Formation> formations;
-
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}	
-	public Boolean getCivilite() {
+	public boolean getCivilite() {
 		return civilite;
 	}
-	public void setCivilite(Boolean civilite) {
+	public void setCivilite(boolean civilite) {
 		this.civilite = civilite;
 	}
 	public String getNom() {
@@ -71,7 +36,6 @@ public class Responsable {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-
 	public String getRole() {
 		return role;
 	}
@@ -90,13 +54,6 @@ public class Responsable {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	public List<Formation> getFormations() {
-		return formations;
-	}
-
-	public void setFormations(List<Formation> formations) {
-		this.formations = formations;
-	}
 	public String getIdentifiant() {
 		return identifiant;
 	}
@@ -108,5 +65,7 @@ public class Responsable {
 	}
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
-	}	
+	}
+	
+
 }
