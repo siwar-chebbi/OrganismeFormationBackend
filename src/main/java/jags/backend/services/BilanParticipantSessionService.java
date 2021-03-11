@@ -3,9 +3,12 @@ package jags.backend.services;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import jags.backend.DTO.CoordonneeDTO;
+import jags.backend.DTO.Evaluation;
 import jags.backend.DTO.InscriptionParticipantEmploye;
 import jags.backend.DTO.InscriptionParticipantParticulier;
 import jags.backend.DTO.ResumeInscription;
@@ -208,14 +211,39 @@ public class BilanParticipantSessionService {
 		entreprise.setId(id);
 	}
 	
+	public BilanParticipantSession findById(Long id) {
+		return this.repository.findById(id)
+				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+	}
+	
+	public void bilanToBilanDto(Evaluation bilanParticipantSession) {
+		bilan.setId(bilanParticipantSession.getId());
+		bilan.setAccueil(bilanParticipantSession.getAccueil());
+		bilan.setAnimation(bilanParticipantSession.getAnimation());
+		bilan.setContenu(bilanParticipantSession.getContenu());
+		bilan.setDisponibilite(bilanParticipantSession.getDisponibilite());
+		bilan.setEnvironnement(bilanParticipantSession.getEnvironnement());
+		bilan.setMaitrise(bilanParticipantSession.getMaitrise());
+		bilan.setPedagogie(bilanParticipantSession.getPedagogie());
+		bilan.setPrerequis(bilanParticipantSession.getPrerequis());
+		bilan.setRecommandation(bilanParticipantSession.getRecommandation());
+		bilan.setReponse(bilanParticipantSession.getReponse());
+		bilan.setSouhaitFormation(bilanParticipantSession.getSouhaitFormation());
+		bilan.setSatisfaction(bilanParticipantSession.getSatisfaction());
+		bilan.setParticipant(bilan.getParticipant());
+		bilan.setSession(bilan.getSession());
+	}
+	
 	/**
 	 * Methode permettant d'enregistrer l'evaluation d'une session d'un participant
 	 * @param bilanParticipantSession objet contenant les valeurs de l'evalaution du participant 
 	 */
-	public void evaluationSession(BilanParticipantSession bilanParticipantSession) {
-//		bilan = this.repository.findByParticipantIdAndSessionId(bilanParticipantSession.getParticipant().getId(), bilanParticipantSession.getSession().getId());
-//		bilanParticipantSession.setId(bilan.getId());
-//		this.repository.save(bilanParticipantSession);
+	public void evaluationSession(Evaluation bilanParticipantSession) {
+		if (this.repository.existsById(bilanParticipantSession.getId())) {
+			bilan = findById(bilanParticipantSession.getId());
+			bilanToBilanDto(bilanParticipantSession);
+			this.repository.save(bilan);
+		}
 	}
 	
 	/**

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jags.backend.DTO.Evaluation;
 import jags.backend.DTO.InscriptionParticipantEmploye;
 import jags.backend.DTO.InscriptionParticipantParticulier;
 import jags.backend.DTO.ResumeInscription;
@@ -21,7 +22,7 @@ import jags.backend.services.BilanParticipantSessionService;
 
 @RestController
 @RequestMapping("bilanParticipantSessions")
-@CrossOrigin
+@CrossOrigin(origins = {"*"}, allowedHeaders={"*"})
 public class BilanParticipantSessionController {
 
 	@Autowired
@@ -43,7 +44,7 @@ public class BilanParticipantSessionController {
 	}
 
 	@PutMapping("/evaluations")
-	public void evaluationSession(@RequestBody BilanParticipantSession bilanParticipantSession) {
+	public void evaluationSession(@RequestBody Evaluation bilanParticipantSession) {
 		this.service.evaluationSession(bilanParticipantSession);
 	}
 	
