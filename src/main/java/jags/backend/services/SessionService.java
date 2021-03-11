@@ -3,9 +3,6 @@ package jags.backend.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import jags.backend.DTO.SessionDTO;
+import jags.backend.DTO.SessionDetails;
 import jags.backend.DTO.SessionsParticipant;
 import jags.backend.entities.BilanParticipantSession;
 import jags.backend.entities.Coordonnee;
@@ -20,6 +18,7 @@ import jags.backend.entities.Formation;
 import jags.backend.entities.Lieu;
 import jags.backend.entities.Participant;
 import jags.backend.entities.Session;
+import jags.backend.entities.Theme;
 import jags.backend.repositories.SessionRepository;
 
 @Service
@@ -212,14 +211,23 @@ public class SessionService {
 		List<BilanParticipantSession> bilans = new ArrayList<BilanParticipantSession>();
 		bilans = this.bilanService.findAllByParticipant(participant);
 		for (BilanParticipantSession bilan : bilans) {
-			SessionsParticipant sessionParticipant = new SessionsParticipant();
-			sessionParticipant.setIdBilan(bilan.getId());
-			session = sessionService.findById(bilan.getSession().getId());
-			String titreFormation = session.getFormation().getTitre();
-			sessionParticipant.setTitre(titreFormation);
-			sessionsParticipant.add(sessionParticipant);
+			sessionsParticipant.add(alimentationParticipant(bilan));
 		}
 		return sessionsParticipant;
+	}
+	
+	/**
+	 * Alimentation d'un participant a partir d'un bilan
+	 * @param bilan servant a rercuperer les informations du participant
+	 * @return 
+	 */
+	public SessionsParticipant alimentationParticipant(BilanParticipantSession bilan) {
+		SessionsParticipant sessionParticipant = new SessionsParticipant();
+		sessionParticipant.setIdBilan(bilan.getId());
+		session = sessionService.findById(bilan.getSession().getId());
+		String titreFormation = session.getFormation().getTitre();
+		sessionParticipant.setTitre(titreFormation);
+		return sessionParticipant;
 	}
 	
 	/**
@@ -238,5 +246,26 @@ public class SessionService {
 	 */
 	public long findIdParticipantByCoordonnee(Coordonnee coordonnee) {
 		return this.participantService.findIdParticipantByCoordonneeId(coordonnee).getId();
+	}
+
+	public SessionDetails findSessionDetailsById(long id) {
+		SessionDetails sessionDetails = new SessionDetails();
+		//Recuperer le prix de la formation
+		this.session = findById(id);
+		sessionDetails.setPrix(session.getPrixHT());
+		//Recuperer le titre de la formation
+		Formation formation = session.getFormation();
+		sessionDetails.setTitreFormation(formation.getTitre());
+		//Recuperer le theme de la formation
+		List<String> themes = new ArrayList<String>();
+		for (Theme theme : formation.getThemes()) {
+			themes.add(theme.getNom());
+		}
+		sessionDetails.setThemes(themes);
+		//Recuperer la description du theme
+		sessionDetails.setContenuFormation(formation.getContenu());
+		//Recuperer le lieu de la formation
+		sessionDetails.setLieu(this.session.getLieu().getNom());
+		return sessionDetails;
 	}
 }
