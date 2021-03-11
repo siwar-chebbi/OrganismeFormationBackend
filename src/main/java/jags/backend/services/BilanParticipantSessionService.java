@@ -3,6 +3,8 @@ package jags.backend.services;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,10 @@ import jags.backend.entities.Participant;
 import jags.backend.entities.Session;
 import jags.backend.repositories.BilanParticipantSessionRepository;
 
+import static java.rmi.server.LogStream.log;
+
 @Service
+@Slf4j
 public class BilanParticipantSessionService {
 
 	@Autowired
@@ -83,19 +88,22 @@ public class BilanParticipantSessionService {
 	 * @param coordonnee : les coordonnes du particpant a ajouter ou mettre a jour dans la base de donnees
 	 */
 	public ResumeInscription inscriptionSessionParticulier(InscriptionParticipantParticulier particulier) {
-		traitementBilanEtCoordonneeParticipant(particulier.getIdParticipant(), particulier.getIdSession(), coordonnee);
-		coordonneeDtoToCoordonnee(particulier.getCoordonneeParticipant());
-		this.lieuService.save(session.getLieu());
-		this.participantService.save(participant);
-		return alimentationResumeInscription();
+		boolean alreadyExist = traitementBilanEtCoordonneeParticipant(particulier.getIdParticipant(), particulier.getIdSession(), coordonnee);
+		if (!alreadyExist) {
+			coordonneeDtoToCoordonnee(particulier.getCoordonneeParticipant());
+			this.lieuService.save(session.getLieu());
+			this.participantService.save(participant);
+		}
+		return alimentationResumeInscription(alreadyExist);
 	}
 	
-	public ResumeInscription alimentationResumeInscription() {
+	public ResumeInscription alimentationResumeInscription(boolean alreadyExist) {
 		ResumeInscription resume = new ResumeInscription();
 		resume.setId(this.bilan.getId());
 		resume.setNomParticipant(participant.getNom());
 		resume.setPrenomParticipant(participant.getPrenom());
 		resume.setNumeroSessionEval(this.session.getNumero());
+		resume.setExisteDeja(alreadyExist);
 		return resume;
 	}
 	
@@ -103,28 +111,30 @@ public class BilanParticipantSessionService {
 	 * Traitement pour l'inscription d'un nouveau bilan en base de donnee
 	 * @param participantId : Id du participant a inscrire dans le bilan
 	 * @param sessionId : Id de la session a inscrire dans le bilan
+	 * @return
 	 */
-	public void traitementBilanEtCoordonneeParticipant(Long participantId, Long sessionId, Coordonnee coordonnee) {
+	public boolean traitementBilanEtCoordonneeParticipant(Long participantId, Long sessionId, Coordonnee coordonnee) {
 		recuperationSessionEtParticipantParId(participantId, sessionId);
-		alimentationBilanParticipantEtSession();
-		
 		// Si l'objet bilan n'existe pas alors le crée
 		// (aussi dis permet de vérifier que le participant n'est pas déjà inscrit à une session)
-		if (!findByParticipantIdAndSessionId(participantId,sessionId)) {
+		BilanParticipantSession foundBilan = findByParticipantIdAndSessionId(participantId, sessionId);
+		if (foundBilan ==null) {
+			alimentationBilanParticipantEtSession();
 			creationBilan();
 			sauvegardeCoordonneeParticipant(coordonnee);
+			return false;
 		}else {
-			throw new IllegalArgumentException(MessageFormat.format("Le participant numéro {0} est déjà inscrit à la session numéro {1}", participantId, sessionId));
+			log(MessageFormat.format("Le participant numéro {0} est déjà inscrit à la session numéro {1}", participantId, sessionId));
+			this.bilan.setId(foundBilan.getId());
+			return true;
 		}
 		
 	}
 	
-	public Boolean findByParticipantIdAndSessionId(Long participantId, Long sessionId) {
+	public BilanParticipantSession findByParticipantIdAndSessionId(Long participantId, Long sessionId) {
 		 
-		if (this.repository.findByParticipantIdAndSessionId(participantId, sessionId) == null) {
-			return false; 
-		}
-		return true;
+		return this.repository.findByParticipantIdAndSessionId(participantId, sessionId) ;
+
 	}
 	
 	/**
@@ -145,13 +155,15 @@ public class BilanParticipantSessionService {
 	 *  et les informations de l'entreprise
 	 */
 	public ResumeInscription inscriptionSessionEntreprise(InscriptionParticipantEmploye employe) {
-		coordonneeDtoToCoordonnee(employe.getCoordonneeParticipant());
-		traitementBilanEtCoordonneeParticipant(employe.getIdParticipant(), employe.getIdSession(), coordonnee);
-		coordonneeDtoToCoordonnee(employe.getCoordonneeEntreprise());
-		sauvegardeEntrepriseParticipant(employe.getEntreprise());
-		this.lieuService.save(session.getLieu());
-		this.participantService.save(participant);
-		return alimentationResumeInscription();
+		boolean alreadyExist = traitementBilanEtCoordonneeParticipant(employe.getIdParticipant(), employe.getIdSession(), coordonnee);
+		if (alreadyExist) {
+			coordonneeDtoToCoordonnee(employe.getCoordonneeParticipant());
+			coordonneeDtoToCoordonnee(employe.getCoordonneeEntreprise());
+			sauvegardeEntrepriseParticipant(employe.getEntreprise());
+			this.lieuService.save(session.getLieu());
+			this.participantService.save(participant);
+		}
+		return alimentationResumeInscription(alreadyExist);
 	}
 	
 	/**

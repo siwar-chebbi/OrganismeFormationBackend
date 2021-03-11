@@ -6,6 +6,7 @@ public class ResumeInscription {
 	private String numeroSessionEval;
 	private String nomParticipant;
 	private String prenomParticipant;
+	private boolean existeDeja;
 	
 	public long getId() {
 		return id;
@@ -31,5 +32,12 @@ public class ResumeInscription {
 	public void setPrenomParticipant(String prenomParticpant) {
 		this.prenomParticipant = prenomParticpant;
 	}
-	
+
+	public boolean isExisteDeja() {
+		return existeDeja;
+	}
+
+	public void setExisteDeja(boolean existeDeja) {
+		this.existeDeja = existeDeja;
+	}
 }
