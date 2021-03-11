@@ -211,11 +211,21 @@ public class BilanParticipantSessionService {
 		entreprise.setId(id);
 	}
 	
+	/**
+	 * Récupération d'un bilan par son ID
+	 * @param id du bilan rechercher
+	 * @return L'objet qui est trouvé sinon lève une execption
+	 */
 	public BilanParticipantSession findById(Long id) {
 		return this.repository.findById(id)
 				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 	
+	/**
+	 * Convertis l'objet bilan reçu du front (Traitement de données)
+	 * vers l'objet bilan contenu dans la BDD dans le cas d'une évaluation
+	 * @param bilanParticipantSession Dto Evaluation reçu du front lors d'une évaluation d'une session
+	 */
 	public void bilanToBilanDto(Evaluation bilanParticipantSession) {
 		bilan.setId(bilanParticipantSession.getId());
 		bilan.setAccueil(bilanParticipantSession.getAccueil());
@@ -235,11 +245,20 @@ public class BilanParticipantSessionService {
 	}
 	
 	/**
+	 * Permet de vérifier si un bilan est contenu(existe) dans la table bilanSessionParticipant
+	 * @param id du bilan qui existe ou non
+	 * @return un Boolean
+	 */
+	public Boolean existsById(Long id) {
+		 return this.repository.existsById(id);
+	}
+	
+	/**
 	 * Methode permettant d'enregistrer l'evaluation d'une session d'un participant
 	 * @param bilanParticipantSession objet contenant les valeurs de l'evalaution du participant 
 	 */
 	public void evaluationSession(Evaluation bilanParticipantSession) {
-		if (this.repository.existsById(bilanParticipantSession.getId())) {
+		if (existsById(bilanParticipantSession.getId())) {
 			bilan = findById(bilanParticipantSession.getId());
 			bilanToBilanDto(bilanParticipantSession);
 			this.repository.save(bilan);
