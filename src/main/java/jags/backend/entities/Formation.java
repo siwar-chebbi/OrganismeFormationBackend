@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
 
@@ -50,6 +51,7 @@ public class Formation {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     //@MapsId("id")
+	@JsonIgnore
 	@JoinColumn(name = "Responsable_id")
 	private Responsable responsable;
 	
@@ -61,7 +63,8 @@ public class Formation {
 	joinColumns = @JoinColumn(name = "Formation_id"), 
 	inverseJoinColumns = @JoinColumn (name ="Theme_id"))
 	private List<Theme> themes;
-	
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "formation", cascade = CascadeType.ALL)
 	private List<Session> sessions;
 

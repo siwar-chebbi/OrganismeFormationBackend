@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
 @Entity 
@@ -43,7 +44,8 @@ public class Responsable {
 	
 	@Column(name = "Mdp", length = 100)
 	private String mdp;
-	
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "responsable")
 	private List<Formation> formations;
 

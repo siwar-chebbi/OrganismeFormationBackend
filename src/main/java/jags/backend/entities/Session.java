@@ -59,6 +59,7 @@ public class Session {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 //    @MapsId("id")
+	@JsonIgnore
 	@JoinColumn(name="Formation_id")
     private Formation formation;
 	
@@ -68,6 +69,7 @@ public class Session {
 	@JoinColumn(name="Lieu_id")
     private Lieu lieu;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "session")
 	private List<BilanParticipantSession> bilanParticipantSessions;
 

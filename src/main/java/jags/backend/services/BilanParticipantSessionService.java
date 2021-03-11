@@ -1,5 +1,6 @@
 package jags.backend.services;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,6 +113,8 @@ public class BilanParticipantSessionService {
 		if (!findByParticipantIdAndSessionId(participantId,sessionId)) {
 			creationBilan();
 			sauvegardeCoordonneeParticipant(coordonnee);
+		}else {
+			throw new IllegalArgumentException(MessageFormat.format("Le participant numéro {0} est déjà inscrit à la session numéro {1}", participantId, sessionId));
 		}
 		
 	}
