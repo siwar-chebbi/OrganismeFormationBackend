@@ -9,6 +9,7 @@ public class SessionDTO {
 	private Double prixHT;
 	private Integer duree;
 	private Date dateDebut;
+	private Date dateFin;
 	private Long idFormation;
 	private Long idLieu;
 	
@@ -59,6 +60,12 @@ public class SessionDTO {
 	}
 	public void setIdLieu(Long idLieu) {
 		this.idLieu = idLieu;
+	}
+	public Date getDateFin() {
+		return dateFin;
+	}
+	public void setDateFin(Date dateFin) {
+		this.dateFin = dateFin;
 	}
 	
 }
