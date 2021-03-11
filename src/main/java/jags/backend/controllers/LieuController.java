@@ -1,6 +1,8 @@
 package jags.backend.controllers;
 
 import java.util.List;
+
+import jags.backend.DTO.LieuDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,7 +22,7 @@ public class LieuController {
 	LieuService service;
 	
 	@GetMapping("")
-	public List<Lieu> findAll(){
+	public List<LieuDTO> findAll(){
 		return this.service.findAll();
 	}
 	

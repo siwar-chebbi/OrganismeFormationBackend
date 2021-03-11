@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="Lieu")
 public class Lieu {
@@ -29,7 +31,8 @@ public class Lieu {
 	@Column(name="Disponibilite")
 	private Boolean disponibilite;
 
-	@OneToMany(mappedBy = "lieu")
+	@JsonIgnore
+	@OneToMany(mappedBy = "lieu", fetch = FetchType.LAZY)
 	private List<Session> sessions;
 
 	public Boolean getDisponibilite() {

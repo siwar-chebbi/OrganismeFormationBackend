@@ -66,7 +66,7 @@ public class FormationService {
 	/**
 	 * Recuperation d'un responsable par son Id
 	 * @param id du responsable recherche
-	 * @return le responsable recherche par l'Id
+	 *   le responsable recherche par l'Id
 	 */
 	public Responsable recupererResponsableById(Long id){
 		return this.responsableService.findById(id);
