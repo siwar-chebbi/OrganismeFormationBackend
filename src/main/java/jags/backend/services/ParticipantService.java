@@ -112,9 +112,4 @@ public class ParticipantService {
 	public Participant findIdParticipantByCoordonneeId(Coordonnee coordonnee) {
 		return this.repository.findByCoordonnee(coordonnee);
 	}
-
-	public Participant findByCoordonnee(Coordonnee coordonnee) {
-		return this.repository.findByCoordonnee(coordonnee);
-	}
-
 }

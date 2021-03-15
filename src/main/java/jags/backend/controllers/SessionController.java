@@ -47,9 +47,9 @@ public class SessionController {
 		return this.service.save(entity);
 	}
 	
-	@GetMapping("/mail")
-	public List<SessionsParticipant> findSessionsByMailParticipant(@RequestParam String mail) {
-		return this.service.findSessionsByMailParticipant(mail);
+	@GetMapping("/participant/{id}")
+	public List<SessionsParticipant> findSessionsByMailParticipant(@PathVariable long id) {
+		return this.service.findSessionsByParticipantId(id);
 	}	
 	
 	@GetMapping("/details/{id}")

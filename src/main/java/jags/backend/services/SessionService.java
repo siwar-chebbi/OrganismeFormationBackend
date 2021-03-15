@@ -205,10 +205,9 @@ public class SessionService {
 	 * @param mail du participant souhaitant evaluer une session
 	 * @return une liste d'IdBilan et de titre de formation, pour que l'utilisateur puisse choisir la sessions a evaluer
 	 */
-	public List<SessionsParticipant> findSessionsByMailParticipant(String mail) {
+	public List<SessionsParticipant> findSessionsByParticipantId(long id) {
 		List<SessionsParticipant> sessionsParticipant = new ArrayList<SessionsParticipant>();
-		Coordonnee coordonnee = recuperationCoordonne(mail);
-		Participant participant = this.participantService.findByCoordonnee(coordonnee);
+		Participant participant = this.participantService.findById(id);
 		List<BilanParticipantSession> bilans = new ArrayList<BilanParticipantSession>();
 		bilans = this.bilanService.findAllByParticipant(participant);
 		for (BilanParticipantSession bilan : bilans) {
